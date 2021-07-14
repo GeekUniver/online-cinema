@@ -1,0 +1,15 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /onlineCinema
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=online_cinema
+    username:
+    password:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
