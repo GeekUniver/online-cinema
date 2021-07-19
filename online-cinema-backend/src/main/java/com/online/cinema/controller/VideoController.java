@@ -1,8 +1,7 @@
 package com.online.cinema.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,17 +18,12 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 @RequestMapping("/api/v1/video")
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 public class  VideoController {
 
-    private final Logger logger = LoggerFactory.getLogger(VideoController.class);
-
     private final VideoService videoService;
-
-    @Autowired
-    public VideoController(VideoService videoService) {
-        this.videoService = videoService;
-    }
 
     @GetMapping("/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
@@ -51,7 +45,7 @@ public class  VideoController {
     @GetMapping("/stream/{id}")
     public ResponseEntity<StreamingResponseBody> streamVideo(@RequestHeader(value = "Range", required = false) String httpRangeHeader,
                                                              @PathVariable("id") Long id) {
-        logger.info("Requested range [{}] for file `{}`", httpRangeHeader, id);
+        log.info("Requested range [{}] for file `{}`", httpRangeHeader, id);
 
         List<HttpRange> httpRangeList = HttpRange.parseRanges(httpRangeHeader);
         StreamBytesInfo streamBytesInfo = videoService.getStreamBytes(id, httpRangeList.size() > 0 ? httpRangeList.get(0) : null)
@@ -69,7 +63,7 @@ public class  VideoController {
                             "-" + streamBytesInfo.getRangeEnd() +
                             "/" + streamBytesInfo.getFileSize());
         }
-        logger.info("Providing bytes from {} to {}. We are at {}% of overall video.",
+        log.info("Providing bytes from {} to {}. We are at {}% of overall video.",
                 streamBytesInfo.getRangeStart(), streamBytesInfo.getRangeEnd(),
                 new DecimalFormat("###.##").format(100.0 * streamBytesInfo.getRangeStart() / streamBytesInfo.getFileSize()));
         return builder.body(streamBytesInfo.getResponseBody());
@@ -77,7 +71,7 @@ public class  VideoController {
 
     @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> uploadVideo(NewVideoRepr newVideoRepr) {
-        logger.info(newVideoRepr.getDescription());
+        log.info(newVideoRepr.getDescription());
 
         try {
             videoService.saveNewVideo(newVideoRepr);

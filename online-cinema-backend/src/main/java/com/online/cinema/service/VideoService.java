@@ -1,5 +1,7 @@
 package com.online.cinema.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,10 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static com.online.cinema.Utils.removeFileExt;
 
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class VideoService {
-
-    private final Logger logger = LoggerFactory.getLogger(VideoService.class);
 
     @Value("${data.folder}")
     private String dataFolder;
@@ -37,12 +39,6 @@ public class VideoService {
     private final VideoMetadataRepository repository;
 
     private final FrameGrabberService frameGrabberService;
-
-    @Autowired
-    public VideoService(VideoMetadataRepository repository, FrameGrabberService frameGrabberService) {
-        this.repository = repository;
-        this.frameGrabberService = frameGrabberService;
-    }
 
     public List<VideoMetadataRepr> findAllVideoMetadata() {
         return repository.findAll().stream()
@@ -77,7 +73,7 @@ public class VideoService {
                     try {
                         return Optional.of(Files.newInputStream(previewPicturePath));
                     } catch (IOException ex) {
-                        logger.error("", ex);
+                        log.error("", ex);
                         return Optional.empty();
                     }
                 });
@@ -103,7 +99,7 @@ public class VideoService {
             metadata.setVideoLength(videoLength);
             repository.save(metadata);
         } catch (IOException ex) {
-            logger.error("", ex);
+            log.error("", ex);
             throw new IllegalStateException(ex);
         }
     }
@@ -115,7 +111,7 @@ public class VideoService {
         }
         Path filePath = Path.of(dataFolder, Long.toString(id), byId.get().getFileName());
         if (!Files.exists(filePath)) {
-            logger.error("File {} not found", filePath);
+            log.error("File {} not found", filePath);
             return Optional.empty();
         }
         try {
@@ -143,7 +139,7 @@ public class VideoService {
                     },
                     fileSize, rangeStart, rangeEnd, byId.get().getContentType()));
         } catch (IOException ex) {
-            logger.error("", ex);
+            log.error("", ex);
             return Optional.empty();
         }
     }
