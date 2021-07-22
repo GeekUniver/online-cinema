@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "geek-tube-angular-frontend"
+  "defaultProject": "geek-tube-angular-frontend",
+  "cli": {
+    "analytics": "8d01935b-dd2f-4282-8b74-9dbf6ecb73f4"
+  }
 }
