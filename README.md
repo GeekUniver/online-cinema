@@ -25,3 +25,19 @@ After that go to the project root in another console and run backend with
 ```bash
 ./mvnw spring-boot:run
 ```
+
+How to work with a local profile?
+
+Create a new profile with the name "local" according to this instruction [](https://www.jetbrains.com/help/idea/customizing-profiles.html)
+
+Go to Run -> Profile -> Edit Configurations -> Active Profiles -> "local"
+
+---
+
+How to work with directory.properties?
+
+directory.properties 
+
+    
+
+

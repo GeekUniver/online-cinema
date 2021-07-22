@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+online-cinema-backend/src/main/resources/directory.properties
 
 ### STS ###
 .apt_generated
