@@ -1,5 +1,6 @@
 package com.online.cinema.service;
 
+import com.online.cinema.exception_handlers.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE;
