@@ -27,15 +27,18 @@ export class VideoPlayerComponent implements OnInit {
           videoPlayer.load();
 
           let currentTime = sessionStorage.getItem("currentTime");
-          if (currentTime) {
-            videoPlayer.currentTime = currentTime;
+          let currentFilmId = sessionStorage.getItem("currentFilmId")
+          if (currentTime || currentFilmId) {
+            if (currentFilmId == String(this.videoMetadata.id)) {
+              videoPlayer.currentTime = currentTime;
+            }
           }
 
           videoPlayer.ontimeupdate = () => {
             sessionStorage.setItem("currentTime", videoPlayer.currentTime);
+            sessionStorage.setItem("currentFilmId", String(this.videoMetadata.id))
           }
         })
     })
   }
-
 }
