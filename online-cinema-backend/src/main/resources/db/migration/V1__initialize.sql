@@ -4,7 +4,7 @@ CREATE TABLE video_metadata(
                                content_type varchar(20) not null,
                                description varchar(10240),
                                file_size bigint not null,
-                               video_length bigint not null
+                               video_length bigint null
 );
 
 
