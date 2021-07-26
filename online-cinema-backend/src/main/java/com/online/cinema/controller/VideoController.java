@@ -1,5 +1,6 @@
 package com.online.cinema.controller;
 
+import com.online.cinema.exception_handlers.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpRange;
@@ -16,6 +17,7 @@ import com.online.cinema.controller.repr.NewVideoRepr;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.function.Supplier;
 
 @RequestMapping("/api/v1/video")
 @Slf4j
@@ -31,8 +33,8 @@ public class  VideoController {
     }
 
     @GetMapping("/{id}")
-    public VideoMetadataRepr findVideoMetadataById(@PathVariable("id") Long id) {
-        return videoService.findById(id).orElseThrow(NotFoundException::new);
+    public VideoMetadataRepr findVideoMetadataById(@PathVariable("id") Long id) throws Throwable {
+        return videoService.findById(id).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + id));
     }
 
     @GetMapping(value = "/preview/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
@@ -79,11 +81,6 @@ public class  VideoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<Void> notFoundExceptionHandler(NotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
 
