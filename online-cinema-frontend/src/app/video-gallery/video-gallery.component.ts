@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { DataService } from "../data.service";
 import {VideoMetadata} from "../video-metadata";
 
 @Component({
   selector: 'app-video-gallery',
   templateUrl: './video-gallery.component.html',
-  styleUrls: ['./video-gallery.component.scss']
+  styleUrls: ['./video-gallery.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class VideoGalleryComponent implements OnInit {
 
