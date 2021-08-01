@@ -30,12 +30,13 @@ public class VideoController {
 
     private final VideoService videoService;
 
-    @GetMapping("/all")
+    @Deprecated
+    @GetMapping("/list/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
         return videoService.findAllVideoMetadata();
     }
 
-    @GetMapping("/pages/all")
+    @GetMapping("/all")
     public Page<VideoMetadataRepr> getVideoMetadataPages(
             @RequestParam MultiValueMap<String, String> params,
             @RequestParam(name = "p", defaultValue = "1") Integer page,

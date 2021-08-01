@@ -12,18 +12,24 @@ export class VideoGalleryComponent implements OnInit {
 
   previews: VideoMetadata[] = [];
   isError: boolean = false;
+  searchTemplate: string = "";
 
   constructor(public dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.findAllPreviews()
+    this.update();
+  }
+
+  update(): void {
+    console.log(this.searchTemplate)
+    this.dataService.findAllPreviews(this.searchTemplate)
       .then(res => {
         this.isError = false;
-        this.previews = res;
+        this.previews = res.content;
+        console.log(this.previews.length);
       })
       .catch(err => {
         this.isError = true;
       });
   }
-
 }

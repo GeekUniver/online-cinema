@@ -31,22 +31,25 @@
       </ul>
 
 
-<!--      <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link active" aria-current="page" routerLink="/">Catalog</a>-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--      <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link active" aria-current="page" routerLink="/">Random Movie</a>-->
-<!--        </li>-->
-<!--      </ul>-->
+      <!--      <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+      <!--        <li class="nav-item">-->
+      <!--          <a class="nav-link active" aria-current="page" routerLink="/">Catalog</a>-->
+      <!--        </li>-->
+      <!--      </ul>-->
+      <!--      <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+      <!--        <li class="nav-item">-->
+      <!--          <a class="nav-link active" aria-current="page" routerLink="/">Random Movie</a>-->
+      <!--        </li>-->
+      <!--      </ul>-->
 
 
     </div>
     <form class="d-flex me-2">
+<!--      <input type="text" [ngModel]="searchTemplate" aria-label="Search">-->
+<!--      <p>{{searchTemplate}}</p>-->
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-secondary" type="submit">Search</button>
+      <button (click)="search()">Search</button>
+<!--      <button class="btn btn-outline-secondary" type="submit">Search</button>-->
     </form>
     <a class="btn btn-outline-secondary" routerLink="/upload">Upload</a>
   </div>

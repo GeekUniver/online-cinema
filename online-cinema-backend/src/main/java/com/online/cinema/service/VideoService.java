@@ -40,13 +40,14 @@ public class VideoService {
 
     private final FrameGrabberService frameGrabberService;
 
+    @Deprecated
     public List<VideoMetadataRepr> findAllVideoMetadata() {
         return videoMetadataRepository.findAll().stream()
                 .map(VideoService::convert)
                 .collect(Collectors.toList());
     }
 
-    public Page<VideoMetadataRepr> getVideoMetadataPages(Specification<VideoMetadata> spec, int page, Integer size) {
+    public Page<VideoMetadataRepr> getVideoMetadataPages(Specification<VideoMetadata> spec, Integer page, Integer size) {
         return videoMetadataRepository.findAll(spec, PageRequest.of(page, size)).map(VideoService::convert);
     }
 
