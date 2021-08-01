@@ -1,0 +1,17 @@
+<div class="card">
+  <video id="videoPlayer" controls class="card-img-top" #videoPlayer>
+    <source src="{{videoMetadata.streamUrl}}" type="{{videoMetadata.contentType}}">
+    Your browser does not support the video tag.
+  </video>
+  <div class="card-body">
+    <p class="card-text">{{videoMetadata.description}}</p>
+    <form id="commentForm" name="commentForm">
+      <div class="mb-3">
+        <label for="comment">Your comment</label>
+        <input type="text" class="form-control" name="comment" id="comment" aria-describedby="Your comment"
+               placeholder="Enter your comment about video">
+      </div>
+      <button class="btn btn-dark" (click)="submit()" type="button" >Submit</button>
+    </form>
+  </div>
+</div>
