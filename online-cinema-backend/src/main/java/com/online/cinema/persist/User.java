@@ -33,4 +33,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "app_role_id")
     )
     private List<Role> roleList;
+
+    public void setUserRole(String role) {
+        String userRole;
+        userRole = role;
+    }
 }

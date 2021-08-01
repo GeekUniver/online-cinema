@@ -16,17 +16,29 @@ CREATE TABLE app_user(
                          password varchar(255) not null
 );
 
+INSERT INTO app_user(email, login, password) VALUES
+            ('u@u', 'useruser', '$2y$12$gRaobCsBpzWbJG.4PLIxG.MY5y7mGY6a6oZjVahDGChjKpLoUA/cK'),
+            ('a@a', 'adminadmin', 'admin');  /*$2y$12$a43MrZhiHGJrPb0XgNjkBeOtzFfVpeONilQxDMzq5hFteekOiM9dy*/
+
 /*Пользователи системы. Префикс app нужен для совместимости с СУБД, где role зарезервировал*/
 CREATE TABLE app_role(
                          id bigserial primary key,
                          name varchar(255) not null
 );
 
+INSERT INTO app_role(name) VALUES
+            ('ROLE_ADMIN'),
+            ('ROLE_CLIENT');
+
 /*Роли пользователей, таблица соответствия*/
 CREATE TABLE app_user_role(
                               app_user_id bigint references app_user(id),
                               app_role_id bigint references app_role(id)
 );
+
+INSERT INTO app_user_role(app_user_id, app_role_id) VALUES
+            (1, 1),
+            (2, 2);
 
 /*Комментарии пользователей к видео
   Ссылка на пользователя и видео - обязательные атрибуты
