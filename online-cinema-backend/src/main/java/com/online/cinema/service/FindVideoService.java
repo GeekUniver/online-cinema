@@ -52,6 +52,7 @@ public class FindVideoService {
                 .entrySet()
                 .stream()
                 .sorted(Comparator.comparingInt(Map.Entry::getValue))
+                .sorted(Comparator.comparingInt(a -> a.getKey().getYear_filmed()))
                 .map(e-> {
                     e.getKey().getCrewWithRole().forEach(crewWithRole -> crewWithRole.setVideoMetadata(null));
                     return e.getKey();}
@@ -69,6 +70,7 @@ public class FindVideoService {
             findByYear(Integer.parseInt(condition), found, YEAR_POINTS);
         }
         findByCrew(condition, found, CREW_POINTS);
+        findByName(condition, found, NAME_POINTS);
     }
 
     private void findByYear(Integer condition, Map<VideoMetadata, Integer> found, Integer points){
@@ -79,6 +81,17 @@ public class FindVideoService {
             if (mapPoints == null) mapPoints = 0;
             mapPoints +=points;
             found.put(foundByYear, mapPoints);
+        }
+    }
+
+    private void findByName(String condition, Map<VideoMetadata, Integer> found, Integer points){
+        List<VideoMetadata> videoMetadataByName = videoMetadataFindRepository.findAllByName(condition);
+        Integer mapPoints;
+        for (VideoMetadata foundByName: videoMetadataByName) {
+            mapPoints = found.get(foundByName);
+            if (mapPoints == null) mapPoints = 0;
+            mapPoints +=points;
+            found.put(foundByName, mapPoints);
         }
     }
 

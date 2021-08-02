@@ -393,6 +393,18 @@ insert into video_metadata_crew(
     crew_classifier_id,
     crew_role_classifier_id)
 values
+    (4,1,1),
+    (4,2,1),
+    (4,3,1),
+    (4,5,1),
+    (4,10,2);
+
+
+insert into video_metadata_crew(
+    video_metadata_id,
+    crew_classifier_id,
+    crew_role_classifier_id)
+values
     (5,1,1),
     (5,2,1),
     (5,3,1),

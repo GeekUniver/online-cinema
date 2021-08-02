@@ -25,7 +25,12 @@ public interface VideoMetadataFindRepository extends JpaRepository<VideoMetadata
                     "or crew_classifier.first_name = :lastName and crew_classifier.last_name = :firstName) " +
                     "and (crew_classifier.patronymic = :patronymic or crew_classifier.patronymic is null)",
             nativeQuery = true)
-    public List<VideoMetadata> findVideoMetadataByCrewFirstLastPatronymic(@Param("firstName") String firstName,
-                                                                          @Param("lastName") String lastName,
-                                                                          @Param("patronymic") String patronymic);
+    public List<VideoMetadata> findVideoMetadataByCrewFirstLastPatronymic(
+                @Param("firstName") String firstName,
+                @Param("lastName") String lastName,
+                @Param("patronymic") String patronymic);
+
+
+    public List<VideoMetadata> findAllByName(String name);
+
 }
