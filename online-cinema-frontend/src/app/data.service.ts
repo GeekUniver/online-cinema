@@ -16,8 +16,12 @@ export class DataService {
   }
 
   public findAllPreviews(fileName: string) {
+    fileName = fileName.trim();
+    if (fileName === "") {
+      return this.http.get<Page>('/api/v1/video/all').toPromise();
+    }
     const params = new HttpParams()
-      .set('fileName', fileName);
+      .set('fileName', encodeURI(fileName));
 
     return this.http.get<Page>('/api/v1/video/all', {params}).toPromise();
   }

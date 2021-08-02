@@ -1,3 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand"  href="#" role="banner" routerLink="/">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent"  href="#" role="banner">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Random Movie</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Catalog
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="#">Comedy</a></li>
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Drama</a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+    <input type="text" [(ngModel)]="searchTemplate">
+    <button (click)="update()">Search</button>
+    <a class="btn btn-outline-secondary" routerLink="/upload">Upload</a>
+  </div>
+</nav>
+
 
 <main role="main">
   <div class="jumbotron">
@@ -20,7 +59,7 @@
     Can't load the video gallery
   </div>
 
-  <div class="col-4" *ngFor="let preview of previews">
+  <div class="col-4" *ngFor="let preview of previews;">
     <a routerLink="/player/{{preview.id}}">
       <img src="{{preview.previewUrl}}" alt="..." class="card-img-top">
     </a>
@@ -28,5 +67,4 @@
       <p class="card-text">{{preview.description}}</p>
     </div>
   </div>
-
 </div>

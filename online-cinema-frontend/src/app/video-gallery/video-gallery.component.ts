@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { DataService } from "../data.service";
 import {VideoMetadata} from "../video-metadata";
 
@@ -6,10 +6,9 @@ import {VideoMetadata} from "../video-metadata";
   selector: 'app-video-gallery',
   templateUrl: './video-gallery.component.html',
   styleUrls: ['./video-gallery.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class VideoGalleryComponent implements OnInit {
-
   previews: VideoMetadata[] = [];
   isError: boolean = false;
   searchTemplate: string = "";
@@ -21,15 +20,14 @@ export class VideoGalleryComponent implements OnInit {
   }
 
   update(): void {
-    console.log(this.searchTemplate)
     this.dataService.findAllPreviews(this.searchTemplate)
       .then(res => {
         this.isError = false;
         this.previews = res.content;
-        console.log(this.previews.length);
       })
       .catch(err => {
         this.isError = true;
       });
+    this.searchTemplate = "";
   }
 }
