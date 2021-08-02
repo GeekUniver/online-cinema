@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -40,6 +37,8 @@ public class FindVideoService {
 
     private final Integer PART_POINTS = 1;
     private final Integer DESCRIPTION_POINTS = 2;
+    private final Integer COUNTRY_POINTS = 2;
+    private final Integer GENRE_POINTS = 2;
     private final Integer YEAR_POINTS = 3;
     private final Integer CREW_POINTS = 4;
     private final Integer NAME_POINTS = 5;
@@ -51,12 +50,11 @@ public class FindVideoService {
         return films
                 .entrySet()
                 .stream()
-                .sorted(Comparator.comparingInt(Map.Entry::getValue))
                 .sorted(Comparator.comparingInt(a -> a.getKey().getYear_filmed()))
+                .sorted((a,b) -> b.getValue().compareTo(a.getValue()))
                 .map(e-> {
                     e.getKey().getCrewWithRole().forEach(crewWithRole -> crewWithRole.setVideoMetadata(null));
-                    return e.getKey();}
-                )
+                    return e.getKey();})
                 .collect(Collectors.toList());
     }
 
@@ -71,28 +69,38 @@ public class FindVideoService {
         }
         findByCrew(condition, found, CREW_POINTS);
         findByName(condition, found, NAME_POINTS);
+        findByCountry(condition, found, COUNTRY_POINTS);
+        findByGenre(condition, found, GENRE_POINTS);
+        findByDescription(condition, found, DESCRIPTION_POINTS);
+
+        String[] words = condition.split(" ");
+
+        for (String word: words) {
+
+            if (word.length() < 3) continue;
+
+            findByCrewAnyName(word, found, PART_POINTS);
+            findByNameContaining(word, found, PART_POINTS);
+            findByCountry(word, found, PART_POINTS);
+            findByGenre(word, found, PART_POINTS);
+            findByDescription(word, found, PART_POINTS);
+
+        }
     }
 
     private void findByYear(Integer condition, Map<VideoMetadata, Integer> found, Integer points){
         List<VideoMetadata> videoMetadataByYear = videoMetadataFindRepository.findVideoMetadataByYear(condition);
-        Integer mapPoints;
-        for (VideoMetadata foundByYear: videoMetadataByYear) {
-            mapPoints = found.get(foundByYear);
-            if (mapPoints == null) mapPoints = 0;
-            mapPoints +=points;
-            found.put(foundByYear, mapPoints);
-        }
+        calcPoints(found, videoMetadataByYear, points);
     }
 
     private void findByName(String condition, Map<VideoMetadata, Integer> found, Integer points){
         List<VideoMetadata> videoMetadataByName = videoMetadataFindRepository.findAllByName(condition);
-        Integer mapPoints;
-        for (VideoMetadata foundByName: videoMetadataByName) {
-            mapPoints = found.get(foundByName);
-            if (mapPoints == null) mapPoints = 0;
-            mapPoints +=points;
-            found.put(foundByName, mapPoints);
-        }
+        calcPoints(found, videoMetadataByName, points);
+    }
+
+    private void findByNameContaining(String condition, Map<VideoMetadata, Integer> found, Integer points){
+        List<VideoMetadata> videoMetadataByName = videoMetadataFindRepository.findAllByNameContaining(condition);
+        calcPoints(found, videoMetadataByName, points);
     }
 
     private void findByCrew(String condition, Map<VideoMetadata, Integer> found, Integer points){
@@ -110,13 +118,40 @@ public class FindVideoService {
 
         if (videoMetadataByCrew == null) return;
 
+        calcPoints(found, videoMetadataByCrew, points);
+    }
+
+    private void findByCountry(String condition, Map<VideoMetadata, Integer> found, Integer points){
+        List<VideoMetadata> videoMetadataByCountry = videoMetadataFindRepository.findVideoMetadataByCountry(condition);
+        calcPoints(found, videoMetadataByCountry, points);
+    }
+
+    private void findByGenre(String condition, Map<VideoMetadata, Integer> found, Integer points){
+        List<VideoMetadata> videoMetadataByGenre = videoMetadataFindRepository.findVideoMetadataByGenre(condition);
+        calcPoints(found, videoMetadataByGenre, points);
+    }
+
+    private void findByDescription(String condition, Map<VideoMetadata, Integer> found, Integer points) {
+        List<VideoMetadata> allByDescriptionContaining = videoMetadataFindRepository.findAllByDescriptionContaining(condition);
+        calcPoints(found, allByDescriptionContaining, points);
+    }
+
+
+    private void findByCrewAnyName(String condition, Map<VideoMetadata, Integer> found, Integer points){
+        List<VideoMetadata> videoMetadataByCrewFirstOrLastOrPatronymic = videoMetadataFindRepository.findVideoMetadataByCrewFirstOrLastOrPatronymic(condition);
+        calcPoints(found, videoMetadataByCrewFirstOrLastOrPatronymic, points);
+    }
+
+
+    private void calcPoints(Map<VideoMetadata, Integer> found, List<VideoMetadata> videoMetadataList, Integer points){
         Integer mapPoints;
-        for (VideoMetadata foundByCrew: videoMetadataByCrew) {
-            mapPoints = found.get(foundByCrew);
+        for (VideoMetadata video: videoMetadataList) {
+            mapPoints = found.get(video);
             if (mapPoints == null) mapPoints = 0;
-            mapPoints +=points;
-            found.put(foundByCrew, mapPoints);
+            mapPoints += points;
+            found.put(video, mapPoints);
         }
     }
+
 
 }

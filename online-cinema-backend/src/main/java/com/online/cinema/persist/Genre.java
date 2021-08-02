@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "genre_classifier")
 @Data
 @NoArgsConstructor
-public class Jenre {
+public class Genre {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

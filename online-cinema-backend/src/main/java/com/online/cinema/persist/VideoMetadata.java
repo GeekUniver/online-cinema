@@ -44,7 +44,7 @@ public class VideoMetadata {
             joinColumns = @JoinColumn(name = "video_metadata_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_classifier_id")
     )
-    private List<Jenre> jenreList;
+    private List<Genre> genreList;
 
     /*Страны производства фильма*/
     @ManyToMany(fetch = FetchType.LAZY)

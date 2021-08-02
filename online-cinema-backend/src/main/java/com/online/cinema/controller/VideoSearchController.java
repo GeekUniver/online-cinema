@@ -38,4 +38,3 @@ public class VideoSearchController {
         return findVideoService.find(condition);
     }
 }
-
