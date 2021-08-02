@@ -48,7 +48,7 @@ CREATE TABLE video_comment(
   Ссылка на пользователя и видео - обязательный атрибуты
   dt - дата добавления оценки, по умолчанию текущая дата с сервера
  */
-CREATE TABLE video_scores(
+CREATE TABLE video_score(
                              id bigserial primary key,
                              app_user_id bigint not null references app_user(id),
                              video_metadata_id bigint not null references video_metadata(id),

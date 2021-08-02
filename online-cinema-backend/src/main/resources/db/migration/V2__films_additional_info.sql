@@ -4,6 +4,9 @@ ALTER TABLE video_metadata ADD COLUMN year_filmed integer null;
 /*Наименование фильма*/
 ALTER TABLE video_metadata ADD COLUMN name varchar(255) not null default 'unnamed';
 
+/*Бан пользователя*/
+ALTER TABLE app_user ADD COLUMN banned smallint not null default 0;
+
 
 /*Классификатор людей, работающих над фильмом*/
 CREATE TABLE crew_classifier(
@@ -24,9 +27,10 @@ CREATE TABLE crew_role_classifier(
 
 /*Люди, работающие над фильмом*/
 CREATE TABLE video_metadata_crew(
-     video_metadata_id bigint not null references video_metadata(id),
-     crew_classifier_id  bigint not null references crew_classifier(id),
-     crew_role_classifier_id bigint not null references crew_role_classifier(id)
+    id bigserial primary key,
+    video_metadata_id bigint not null references video_metadata(id),
+    crew_classifier_id  bigint not null references crew_classifier(id),
+    crew_role_classifier_id bigint not null references crew_role_classifier(id)
 );
 
 /*Страны производства фильмов*/
