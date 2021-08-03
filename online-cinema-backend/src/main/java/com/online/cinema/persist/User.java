@@ -26,6 +26,10 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "banned")
+    private Integer banned;
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "app_user_role",

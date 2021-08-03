@@ -1,16 +1,16 @@
 package com.online.cinema.service;
 
+import com.online.cinema.repository.VideoMetadataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.online.cinema.persist.VideoMetadata;
-import com.online.cinema.persist.VideoMetadataRepository;
 
 import com.online.cinema.controller.repr.VideoMetadataRepr;
 import com.online.cinema.controller.repr.NewVideoRepr;
@@ -36,33 +36,36 @@ public class VideoService {
     @Value("${data.folder}")
     private String dataFolder;
 
-    private final VideoMetadataRepository repository;
+    private final VideoMetadataRepository videoMetadataRepository;
 
     private final FrameGrabberService frameGrabberService;
 
     public List<VideoMetadataRepr> findAllVideoMetadata() {
-        return repository.findAll().stream()
+        return videoMetadataRepository.findAll().stream()
                 .map(VideoService::convert)
                 .collect(Collectors.toList());
     }
 
+
     public Optional<VideoMetadataRepr> findById(Long id) {
-        return repository.findById(id)
+        return videoMetadataRepository.findById(id)
                 .map(VideoService::convert);
     }
 
-    private static VideoMetadataRepr convert(VideoMetadata vmd) {
+    public static VideoMetadataRepr convert(VideoMetadata vmd) {
         VideoMetadataRepr repr = new VideoMetadataRepr();
         repr.setId(vmd.getId());
         repr.setPreviewUrl("/api/v1/video/preview/" + vmd.getId());
         repr.setStreamUrl("/api/v1/video/stream/" + vmd.getId());
         repr.setDescription(vmd.getDescription());
         repr.setContentType(vmd.getContentType());
+        repr.setName(vmd.getName());
+        repr.setYear_filmed(vmd.getYear_filmed());
         return repr;
     }
 
     public Optional<InputStream> getPreviewInputStream(Long id) {
-        return repository.findById(id)
+        return videoMetadataRepository.findById(id)
                 .flatMap(vmd -> {
                     Path previewPicturePath = Path.of(dataFolder,
                             vmd.getId().toString(),
@@ -86,7 +89,7 @@ public class VideoService {
         metadata.setContentType(newVideoRepr.getFile().getContentType());
         metadata.setFileSize(newVideoRepr.getFile().getSize());
         metadata.setDescription(newVideoRepr.getDescription());
-        repository.save(metadata);
+        videoMetadataRepository.save(metadata);
 
         Path directory = Path.of(dataFolder, metadata.getId().toString());
         try {
@@ -97,7 +100,7 @@ public class VideoService {
             }
             long videoLength = frameGrabberService.generatePreviewPictures(file);
             metadata.setVideoLength(videoLength);
-            repository.save(metadata);
+            videoMetadataRepository.save(metadata);
         } catch (IOException ex) {
             log.error("", ex);
             throw new IllegalStateException(ex);
@@ -105,7 +108,7 @@ public class VideoService {
     }
 
     public Optional<StreamBytesInfo> getStreamBytes(Long id, HttpRange range) {
-        Optional<VideoMetadata> byId = repository.findById(id);
+        Optional<VideoMetadata> byId = videoMetadataRepository.findById(id);
         if (byId.isEmpty()) {
             return Optional.empty();
         }

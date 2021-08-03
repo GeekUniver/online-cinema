@@ -1,7 +1,11 @@
 package com.online.cinema.controller;
 
+import com.online.cinema.exception_handlers.NotFoundException;
+import com.online.cinema.repository.specifications.VideoMetadataSpecifications;
+import com.online.cinema.service.FindVideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,23 +20,31 @@ import com.online.cinema.controller.repr.NewVideoRepr;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @RequestMapping("/api/v1/video")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-public class  VideoController {
+public class VideoController {
 
     private final VideoService videoService;
+    private final FindVideoService findVideoService;
 
     @GetMapping("/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
         return videoService.findAllVideoMetadata();
     }
 
+    @GetMapping("/search/{condition}")
+    public List<VideoMetadataRepr> findVideoByCondition(@PathVariable String condition) {
+        return findVideoService.find(condition).stream().map(VideoService::convert).collect(Collectors.toList());
+    }
+
     @GetMapping("/{id}")
-    public VideoMetadataRepr findVideoMetadataById(@PathVariable("id") Long id) {
-        return videoService.findById(id).orElseThrow(NotFoundException::new);
+    public VideoMetadataRepr findVideoMetadataById(@PathVariable("id") Long id) throws Throwable {
+        return videoService.findById(id).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + id));
     }
 
     @GetMapping(value = "/preview/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
@@ -79,11 +91,6 @@ public class  VideoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<Void> notFoundExceptionHandler(NotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
 

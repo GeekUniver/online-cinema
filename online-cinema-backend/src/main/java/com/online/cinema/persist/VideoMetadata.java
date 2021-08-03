@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "video_metadata")
@@ -29,6 +30,34 @@ public class VideoMetadata {
 
     @Column
     private Long videoLength;
+
+    @Column
+    private String name;
+
+    @Column
+    private Integer year_filmed;
+
+    /*Список жанров фильма*/
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "video_metadata_genre",
+            joinColumns = @JoinColumn(name = "video_metadata_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_classifier_id")
+    )
+    private List<Genre> genreList;
+
+    /*Страны производства фильма*/
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "video_metadata_country",
+            joinColumns = @JoinColumn(name = "video_metadata_id"),
+            inverseJoinColumns = @JoinColumn(name = "country_classifier_id")
+    )
+    private List<Country> countryList;
+
+    /*Съемочная группа*/
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "videoMetadata")
+    private List<CrewWithRole> crewWithRole;
 
 }
 
