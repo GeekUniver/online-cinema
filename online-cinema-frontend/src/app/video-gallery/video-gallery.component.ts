@@ -9,14 +9,25 @@ import {VideoMetadata} from "../video-metadata";
   encapsulation: ViewEncapsulation.None
 })
 export class VideoGalleryComponent implements OnInit {
-
+  condition: string = "";
   previews: VideoMetadata[] = [];
   isError: boolean = false;
 
   constructor(public dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.findAllPreviews()
+    this.dataService.condition$.subscribe((condition) => this.setCondition(condition));
+    this.update(this.condition);
+  }
+
+  setCondition(condition: string) {
+    this.condition = condition;
+    console.log("video condition: " + this.condition);
+    this.update(condition);
+  }
+
+  update(condition: string) {
+    this.dataService.findAllPreviewsWithCondition(this.condition)
       .then(res => {
         this.isError = false;
         this.previews = res;
@@ -25,5 +36,4 @@ export class VideoGalleryComponent implements OnInit {
         this.isError = true;
       });
   }
-
 }

@@ -1,5 +1,6 @@
 package com.online.cinema.service;
 
+import com.online.cinema.repository.VideoMetadataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +11,6 @@ import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.online.cinema.persist.VideoMetadata;
-import com.online.cinema.repository.VideoMetadataRepository;
 
 import com.online.cinema.controller.repr.VideoMetadataRepr;
 import com.online.cinema.controller.repr.NewVideoRepr;
@@ -46,22 +46,21 @@ public class VideoService {
                 .collect(Collectors.toList());
     }
 
-    public Page<VideoMetadataRepr> getVideoMetadataPages(Specification<VideoMetadata> spec, int page, Integer size) {
-        return videoMetadataRepository.findAll(spec, PageRequest.of(page, size)).map(VideoService::convert);
-    }
 
     public Optional<VideoMetadataRepr> findById(Long id) {
         return videoMetadataRepository.findById(id)
                 .map(VideoService::convert);
     }
 
-    private static VideoMetadataRepr convert(VideoMetadata vmd) {
+    public static VideoMetadataRepr convert(VideoMetadata vmd) {
         VideoMetadataRepr repr = new VideoMetadataRepr();
         repr.setId(vmd.getId());
         repr.setPreviewUrl("/api/v1/video/preview/" + vmd.getId());
         repr.setStreamUrl("/api/v1/video/stream/" + vmd.getId());
         repr.setDescription(vmd.getDescription());
         repr.setContentType(vmd.getContentType());
+        repr.setName(vmd.getName());
+        repr.setYear_filmed(vmd.getYear_filmed());
         return repr;
     }
 

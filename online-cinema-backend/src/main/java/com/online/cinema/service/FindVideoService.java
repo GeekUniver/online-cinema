@@ -1,12 +1,10 @@
 package com.online.cinema.service;
 
 import com.online.cinema.persist.VideoMetadata;
-import com.online.cinema.repository.VideoMetadataFindRepository;
 import com.online.cinema.repository.VideoMetadataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,7 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FindVideoService {
 
-    private final VideoMetadataFindRepository videoMetadataFindRepository;
+    private final VideoMetadataRepository videoMetadataRepository;
 
 
     private final Integer PART_POINTS = 1;
@@ -89,17 +87,17 @@ public class FindVideoService {
     }
 
     private void findByYear(Integer condition, Map<VideoMetadata, Integer> found, Integer points){
-        List<VideoMetadata> videoMetadataByYear = videoMetadataFindRepository.findVideoMetadataByYear(condition);
+        List<VideoMetadata> videoMetadataByYear = videoMetadataRepository.findVideoMetadataByYear(condition);
         calcPoints(found, videoMetadataByYear, points);
     }
 
     private void findByName(String condition, Map<VideoMetadata, Integer> found, Integer points){
-        List<VideoMetadata> videoMetadataByName = videoMetadataFindRepository.findAllByName(condition);
+        List<VideoMetadata> videoMetadataByName = videoMetadataRepository.findAllByName(condition);
         calcPoints(found, videoMetadataByName, points);
     }
 
     private void findByNameContaining(String condition, Map<VideoMetadata, Integer> found, Integer points){
-        List<VideoMetadata> videoMetadataByName = videoMetadataFindRepository.findAllByNameContaining(condition);
+        List<VideoMetadata> videoMetadataByName = videoMetadataRepository.findAllByNameContaining(condition);
         calcPoints(found, videoMetadataByName, points);
     }
 
@@ -111,9 +109,9 @@ public class FindVideoService {
         List<VideoMetadata> videoMetadataByCrew = null;
 
         if (crew.length == 3){
-            videoMetadataByCrew = videoMetadataFindRepository.findVideoMetadataByCrewFirstLastPatronymic(crew[0], crew[1], crew[2]);
+            videoMetadataByCrew = videoMetadataRepository.findVideoMetadataByCrewFirstLastPatronymic(crew[0], crew[1], crew[2]);
         } else if (crew.length == 2){
-            videoMetadataByCrew = videoMetadataFindRepository.findVideoMetadataByCrewFirstLastPatronymic(crew[0], crew[1], "");
+            videoMetadataByCrew = videoMetadataRepository.findVideoMetadataByCrewFirstLastPatronymic(crew[0], crew[1], "");
         }
 
         if (videoMetadataByCrew == null) return;
@@ -122,23 +120,23 @@ public class FindVideoService {
     }
 
     private void findByCountry(String condition, Map<VideoMetadata, Integer> found, Integer points){
-        List<VideoMetadata> videoMetadataByCountry = videoMetadataFindRepository.findVideoMetadataByCountry(condition);
+        List<VideoMetadata> videoMetadataByCountry = videoMetadataRepository.findVideoMetadataByCountry(condition);
         calcPoints(found, videoMetadataByCountry, points);
     }
 
     private void findByGenre(String condition, Map<VideoMetadata, Integer> found, Integer points){
-        List<VideoMetadata> videoMetadataByGenre = videoMetadataFindRepository.findVideoMetadataByGenre(condition);
+        List<VideoMetadata> videoMetadataByGenre = videoMetadataRepository.findVideoMetadataByGenre(condition);
         calcPoints(found, videoMetadataByGenre, points);
     }
 
     private void findByDescription(String condition, Map<VideoMetadata, Integer> found, Integer points) {
-        List<VideoMetadata> allByDescriptionContaining = videoMetadataFindRepository.findAllByDescriptionContaining(condition);
+        List<VideoMetadata> allByDescriptionContaining = videoMetadataRepository.findAllByDescriptionContaining(condition);
         calcPoints(found, allByDescriptionContaining, points);
     }
 
 
     private void findByCrewAnyName(String condition, Map<VideoMetadata, Integer> found, Integer points){
-        List<VideoMetadata> videoMetadataByCrewFirstOrLastOrPatronymic = videoMetadataFindRepository.findVideoMetadataByCrewFirstOrLastOrPatronymic(condition);
+        List<VideoMetadata> videoMetadataByCrewFirstOrLastOrPatronymic = videoMetadataRepository.findVideoMetadataByCrewFirstOrLastOrPatronymic(condition);
         calcPoints(found, videoMetadataByCrewFirstOrLastOrPatronymic, points);
     }
 
