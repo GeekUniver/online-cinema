@@ -2,6 +2,7 @@ package com.online.cinema.controller;
 
 import com.online.cinema.exception_handlers.NotFoundException;
 import com.online.cinema.repository.specifications.VideoMetadataSpecifications;
+import com.online.cinema.service.FindVideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import com.online.cinema.service.StreamBytesInfo;
@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @RequestMapping("/api/v1/video")
 @Slf4j
@@ -29,22 +30,16 @@ import java.util.function.Supplier;
 public class VideoController {
 
     private final VideoService videoService;
+    private final FindVideoService findVideoService;
 
     @GetMapping("/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
         return videoService.findAllVideoMetadata();
     }
 
-    @GetMapping("/pages/all")
-    public Page<VideoMetadataRepr> getVideoMetadataPages(
-            @RequestParam MultiValueMap<String, String> params,
-            @RequestParam(name = "p", defaultValue = "1") Integer page,
-            @RequestParam(name = "productsAtTitle", defaultValue = "5") Integer size
-    ) {
-        if (page < 1) {
-            page = 1;
-        }
-        return videoService.getVideoMetadataPages(VideoMetadataSpecifications.build(params), page - 1, size);
+    @GetMapping("/search/{condition}")
+    public List<VideoMetadataRepr> findVideoByCondition(@PathVariable String condition) {
+        return findVideoService.find(condition).stream().map(VideoService::convert).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")

@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { VideoGalleryComponent } from './video-gallery/video-gallery.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { VideoUploadComponent } from './video-upload/video-upload.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -18,13 +19,14 @@ import { VideoUploadComponent } from './video-upload/video-upload.component';
     FooterComponent,
     VideoGalleryComponent,
     VideoPlayerComponent,
-    VideoUploadComponent
+    VideoUploadComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

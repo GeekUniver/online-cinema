@@ -8,7 +8,7 @@ const routes: Routes = [
   {path:  "", pathMatch:  "full", redirectTo:  "gallery"},
   {path: "gallery", component: VideoGalleryComponent},
   {path: "player/:id", component: VideoPlayerComponent},
-  {path: "upload", component: VideoUploadComponent}
+  {path: "upload", component: VideoUploadComponent},
 ];
 
 @NgModule({
