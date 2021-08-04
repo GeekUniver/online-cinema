@@ -7,7 +7,7 @@ import {DataService} from "../data.service";
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit  {
-  condition: string ="Hello";
+  condition: string ="";
 
   constructor(public dataService: DataService) {
   }
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit  {
   }
 
   setCondition(): void {
-    console.log("header = " + this.condition);
     this.dataService.changeCount(this.condition);
+    this.condition = "";
   }
 }
