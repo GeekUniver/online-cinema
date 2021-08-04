@@ -41,6 +41,8 @@ public class FindVideoService {
     private final Integer CREW_POINTS = 4;
     private final Integer NAME_POINTS = 5;
 
+    private final Integer MAX_RESULTS = 10;
+
     public List<VideoMetadata> find(String condition){
         Map<VideoMetadata, Integer> films = new HashMap<>();
         findFilmsMain(condition, films);
@@ -53,6 +55,7 @@ public class FindVideoService {
                 .map(e-> {
                     e.getKey().getCrewWithRole().forEach(crewWithRole -> crewWithRole.setVideoMetadata(null));
                     return e.getKey();})
+                .limit(MAX_RESULTS)
                 .collect(Collectors.toList());
     }
 
