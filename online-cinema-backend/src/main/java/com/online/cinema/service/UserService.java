@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public Optional<User> getByEmail(String email) {
-        return this.userRepository.findByEmail(email).stream().findFirst();
+        return this.userRepository.findByEmail(email);
     }
 
     public User saveOrUpdateUser(User user) {

@@ -17,8 +17,8 @@ CREATE TABLE app_user(
 );
 
 INSERT INTO app_user(email, login, password) VALUES
-            ('u@u', 'useruser', '$2y$12$gRaobCsBpzWbJG.4PLIxG.MY5y7mGY6a6oZjVahDGChjKpLoUA/cK'),
-            ('a@a', 'adminadmin', 'admin');  /*$2y$12$a43MrZhiHGJrPb0XgNjkBeOtzFfVpeONilQxDMzq5hFteekOiM9dy*/
+            ('u@u', 'user', '$2y$12$gRaobCsBpzWbJG.4PLIxG.MY5y7mGY6a6oZjVahDGChjKpLoUA/cK'),
+            ('a@a', 'admin', '$2a$12$kDMxlytrBLsVXBAjS1vPOOKc0b6lu38y6a03gFUqS8JebDQmmAtbC');  /*$2y$12$a43MrZhiHGJrPb0XgNjkBeOtzFfVpeONilQxDMzq5hFteekOiM9dy*/
 
 /*Пользователи системы. Префикс app нужен для совместимости с СУБД, где role зарезервировал*/
 CREATE TABLE app_role(
@@ -27,8 +27,8 @@ CREATE TABLE app_role(
 );
 
 INSERT INTO app_role(name) VALUES
-            ('ROLE_ADMIN'),
-            ('ROLE_CLIENT');
+            ('ROLE_CLIENT'),
+            ('ROLE_ADMIN');
 
 /*Роли пользователей, таблица соответствия*/
 CREATE TABLE app_user_role(

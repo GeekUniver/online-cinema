@@ -9,9 +9,8 @@ export const environment = {
 export const wsUrl = "//localhost:8080"
 
 export const wsHost = {
-  auth: wsUrl + "/oauth/token",
-  user: wsUrl + "/api/user",
-  movie: wsUrl + "/api/movie",
+  auth: wsUrl + "/api/auth/signin",
+  user: wsUrl + "/api/user"
 
 }
 

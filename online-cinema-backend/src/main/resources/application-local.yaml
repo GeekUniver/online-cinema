@@ -20,7 +20,3 @@ spring:
       enabled: true
       settings:
         web-allow-others: false
-  security:
-    oauth2:
-      resource:
-        id: bcrypt

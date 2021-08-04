@@ -14,6 +14,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 @PropertySource("classpath:directory.properties")
+@PropertySource("classpath:secured.properties")
 public class OnlineCinemaBackendApplication {
 
     public static void main(String[] args) {

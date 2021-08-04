@@ -3,6 +3,7 @@ import { ResponseModel } from 'src/app/models/response.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IModel } from 'src/app/models/model';
 import { WsConstants } from 'src/app/components/admin/constants';
+
 export abstract class AbstractWebService<I extends IModel> {
   constructor(public http: HttpClient, public url: string) { }
   role: string = WsConstants.ROLE_CLIENT;
@@ -15,7 +16,7 @@ export abstract class AbstractWebService<I extends IModel> {
     let token = sessionStorage.getItem(this.role + '_token');
     return this.http.get<ResponseModel<I>>(this.url + "/" + id, { headers: { 'Authorization': 'Bearer ' + token } });
   }
-  
+
   insert(model: I): Observable<ResponseModel<I>> {
     let token = sessionStorage.getItem(this.role + '_token');
     return this.http.post<ResponseModel<I>>(this.url, model, { headers: { 'Authorization': 'Bearer ' + token } });
