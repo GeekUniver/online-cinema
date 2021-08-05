@@ -4,8 +4,6 @@ import com.online.cinema.exception_handlers.NotFoundException;
 import com.online.cinema.service.FindVideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,7 +32,6 @@ public class VideoController {
 
     @GetMapping("/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
-        Page<VideoMetadataRepr> page = new PageImpl<VideoMetadataRepr>(videoService.findAllVideoMetadata());
         return videoService.findAllVideoMetadata();
     }
 
