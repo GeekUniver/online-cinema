@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import static com.online.cinema.Utils.removeFileExt;
+import static com.online.cinema.utils.Utils.removeFileExt;
 
 @Service
 public class FrameGrabberService {

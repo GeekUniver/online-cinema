@@ -1,12 +1,10 @@
 package com.online.cinema.service;
 
+import com.online.cinema.persist.CrewWithRole;
 import com.online.cinema.repository.VideoMetadataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +20,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static com.online.cinema.Utils.removeFileExt;
+import static com.online.cinema.utils.Utils.removeFileExt;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -53,14 +52,10 @@ public class VideoService {
     }
 
     public static VideoMetadataRepr convert(VideoMetadata vmd) {
-        VideoMetadataRepr repr = new VideoMetadataRepr();
-        repr.setId(vmd.getId());
+        vmd.getCrewWithRole().stream().forEach(crewWithRole -> crewWithRole.setVideoMetadata(null));
+        VideoMetadataRepr repr = new VideoMetadataRepr(vmd);
         repr.setPreviewUrl("/api/v1/video/preview/" + vmd.getId());
         repr.setStreamUrl("/api/v1/video/stream/" + vmd.getId());
-        repr.setDescription(vmd.getDescription());
-        repr.setContentType(vmd.getContentType());
-        repr.setName(vmd.getName());
-        repr.setYear_filmed(vmd.getYear_filmed());
         return repr;
     }
 

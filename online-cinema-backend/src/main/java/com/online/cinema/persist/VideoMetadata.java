@@ -56,7 +56,7 @@ public class VideoMetadata {
     private List<Country> countryList;
 
     /*Съемочная группа*/
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "videoMetadata")
+    @OneToMany(mappedBy = "videoMetadata", fetch = FetchType.LAZY)
     private List<CrewWithRole> crewWithRole;
 
 }

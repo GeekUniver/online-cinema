@@ -1,4 +1,4 @@
-package com.online.cinema;
+package com.online.cinema.utils;
 
 public final class Utils {
 
