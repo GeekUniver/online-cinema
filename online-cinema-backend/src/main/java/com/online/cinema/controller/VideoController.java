@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @RequestMapping("/api/v1/video")
+@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 @RequiredArgsConstructor
 @RestController

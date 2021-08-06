@@ -9,7 +9,14 @@ import { FooterComponent } from './footer/footer.component';
 import { VideoGalleryComponent } from './video-gallery/video-gallery.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { VideoUploadComponent } from './video-upload/video-upload.component';
-
+import {FormsModule} from "@angular/forms";
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import { BoardAdminComponent } from './board-admin/board-admin.component';
+import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
+import { BoardUserComponent } from './board-user/board-user.component';
+import { AuthInterceptor } from "./ _helpers/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -18,14 +25,21 @@ import { VideoUploadComponent } from './video-upload/video-upload.component';
     FooterComponent,
     VideoGalleryComponent,
     VideoPlayerComponent,
-    VideoUploadComponent
+    VideoUploadComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent,
+    BoardAdminComponent,
+    BoardModeratorComponent,
+    BoardUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
