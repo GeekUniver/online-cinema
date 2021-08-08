@@ -5,7 +5,7 @@ ALTER TABLE video_metadata ADD COLUMN year_filmed integer null;
 ALTER TABLE video_metadata ADD COLUMN name varchar(255) not null default 'unnamed';
 
 /*Бан пользователя*/
-ALTER TABLE app_user ADD COLUMN banned smallint not null default 0;
+ALTER TABLE app_user ADD COLUMN banned smallint null ;
 
 
 /*Классификатор людей, работающих над фильмом*/

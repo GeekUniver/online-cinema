@@ -20,7 +20,7 @@ export class AuthService {
       username: credentials.username,
       password: credentials.password
     }, httpOptions);
-  }//+ 'signin'
+  }
 
   register(user: { username: any; email: any; password: any; }): Observable<any> {
     return this.http.post(AUTH_API + 'signup', {
