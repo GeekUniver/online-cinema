@@ -4,7 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 online-cinema-backend/src/main/resources/directory.properties
-
+data/
+online-cinema-backend/src/main/resources/secured.properties
 ### STS ###
 .apt_generated
 .classpath
@@ -33,4 +34,3 @@ build/
 ### VS Code ###
 .vscode/
 
-data/
