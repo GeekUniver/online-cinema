@@ -30,18 +30,6 @@ export class VideoGalleryComponent implements OnInit {
 
   update(condition: string) {
     this.dataService.findAllPreviewsWithCondition(this.condition)
-    ////////////Перенести в header/////////////////////
-    this.userService.getPublicContent().subscribe(
-      data => {
-        this.content = data;
-
-      },
-      err => {
-        this.content = JSON.parse(err.error).message;
-      }
-    );
-    /////////
-    this.dataService.findAllPreviews()
       .then(res => {
         this.isError = false;
         this.previews = res;
@@ -50,5 +38,4 @@ export class VideoGalleryComponent implements OnInit {
         this.isError = true;
       });
   }
-
 }
