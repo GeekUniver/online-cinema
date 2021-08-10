@@ -1,0 +1,31 @@
+<main role="main">
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">Онлайн кинотеатр</h1>
+      <p>
+        Лучшие фильмы в лучшем качестве.
+      </p>
+      <p>
+        <a class="btn btn-primary btn-lg" href="https://yandex.ru/referats/" role="button">Топ 100 фильмов</a>
+      </p>
+    </div>
+  </div>
+</main>
+
+<div class="row g-3">
+
+  <div class="alert alert-danger" [style.display]="isError ? 'block' : 'none'">
+    Can't load the video gallery
+  </div>
+
+  <div class="col-4" *ngFor="let preview of previews">
+    <a routerLink="/player/{{preview.id}}">
+      <img src="{{preview.previewUrl}}" alt="..." class="card-img-top">
+    </a>
+    <div class="card-body">
+      <p class="card-text">{{preview.description}}</p>
+    </div>
+  </div>
+
+</div>
+
