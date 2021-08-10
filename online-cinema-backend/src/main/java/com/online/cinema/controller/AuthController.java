@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRespository;
+    UserRepository userRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -58,7 +59,7 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
@@ -71,13 +72,13 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
 
-        if (userRespository.existsByLogin(signupRequest.getUsername())) {
+        if (userRepository.existsByLogin(signupRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is exist"));
         }
 
-        if (userRespository.existsByEmail(signupRequest.getEmail())) {
+        if (userRepository.existsByEmail(signupRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is exist"));
@@ -93,25 +94,36 @@ public class AuthController {
         if (reqRoles == null) {
             Role userRole = roleRepository
                     .findByName(ERole.ROLE_CLIENT)
-                    .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
+                    .orElseThrow(() -> new RuntimeException("Error, Role CLIENT is not found"));
             roles.add(userRole);
         } else {
             reqRoles.forEach(r -> {
-                if ("admin".equals(r)) {
-                    Role adminRole = roleRepository
-                            .findByName(ERole.ROLE_ADMIN)
-                            .orElseThrow(() -> new RuntimeException("Error, Role ADMIN is not found"));
-                    roles.add(adminRole);
-                } else {
-                    Role userRole = roleRepository
-                            .findByName(ERole.ROLE_CLIENT)
-                            .orElseThrow(() -> new RuntimeException("Error, Role CLIENT is not found"));
-                    roles.add(userRole);
+                switch (r) {
+                    case "admin":
+                        Role adminRole = roleRepository
+                                .findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error, Role ADMIN is not found"));
+                        roles.add(adminRole);
+
+                        break;
+//                    case "mod":
+//                        Role modRole = roleRepository
+//                                .findByName(ERole.ROLE_MODERATOR)
+//                                .orElseThrow(() -> new RuntimeException("Error, Role MODERATOR is not found"));
+//                        roles.add(modRole);
+//
+//                        break;
+
+                    default:
+                        Role userRole = roleRepository
+                                .findByName(ERole.ROLE_CLIENT)
+                                .orElseThrow(() -> new RuntimeException("Error, Role CLIENT is not found"));
+                        roles.add(userRole);
                 }
             });
         }
         user.setRoles(roles);
-        userRespository.save(user);
+        userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User CREATED"));
     }
 }

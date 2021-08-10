@@ -52,14 +52,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.cors().and().csrf().disable()
+        http./*cors().and().*/csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
+//    /**   НЕ ПОМОГЛО ОТ 401
+//     *
+//     * Seems like you didn't excluded your login API from Spring security.
+//     * Whenever, we enable spring security,
+//     * we have to configure the list of URLs for which security should not be imposed. Example -
+//     * login api, html files, js files etc. You can do this by adding below method to your SpringConfig class
+//     */
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers("/api/v1/auth/signin").antMatchers(HttpMethod.OPTIONS, "/**"); //// Request type options should be allowed.
+//    }
 }
