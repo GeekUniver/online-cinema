@@ -1,6 +1,11 @@
 package com.online.cinema.service;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.online.cinema.persist.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,24 +18,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
-//    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String login;
+    private String username;
     private String email;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
-
-    public UserDetailsImpl(Long id, String login, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
 
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
@@ -78,28 +75,5 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        if (id == null) result = prime * result;
-        else result = prime * result + id.hashCode();
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        UserDetailsImpl other = (UserDetailsImpl) obj;
-        if (id == null) {
-            return other.id == null;
-        } else return id.equals(other.id);
     }
 }

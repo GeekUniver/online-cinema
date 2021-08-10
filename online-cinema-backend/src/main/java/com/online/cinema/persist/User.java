@@ -1,13 +1,10 @@
 package com.online.cinema.persist;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,6 +26,10 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "banned")
+    private Integer banned;
+
 
     public User(String login, String password, String email) {
         this.login = login;

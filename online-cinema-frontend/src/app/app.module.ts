@@ -10,6 +10,8 @@ import { VideoGalleryComponent } from './video-gallery/video-gallery.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { VideoUploadComponent } from './video-upload/video-upload.component';
 import {FormsModule} from "@angular/forms";
+import { FilmInfoComponent } from './film-info/film-info.component';
+
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -26,13 +28,14 @@ import { AuthInterceptor } from "./ _helpers/auth.interceptor";
     VideoGalleryComponent,
     VideoPlayerComponent,
     VideoUploadComponent,
+    FilmInfoComponent,
+    VideoUploadComponent,
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
     BoardAdminComponent,
     BoardModeratorComponent,
-    BoardUserComponent,
-
+    BoardUserComponent
   ],
   imports: [
     BrowserModule,

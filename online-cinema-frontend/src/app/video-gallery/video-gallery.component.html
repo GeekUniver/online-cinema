@@ -19,13 +19,12 @@
   </div>
 
   <div class="col-4" *ngFor="let preview of previews">
-    <a routerLink="/player/{{preview.id}}">
+    <a routerLink="/info/{{preview.id}}">
       <img src="{{preview.previewUrl}}" alt="..." class="card-img-top">
     </a>
     <div class="card-body">
-      <p class="card-text">{{preview.description}}</p>
+      <p class="card-text">{{preview.name}}</p>
     </div>
   </div>
-
 </div>
 

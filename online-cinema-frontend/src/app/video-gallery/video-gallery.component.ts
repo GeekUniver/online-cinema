@@ -10,7 +10,7 @@ import { UserService } from '../_services/user.service';
   encapsulation: ViewEncapsulation.None
 })
 export class VideoGalleryComponent implements OnInit {
-
+  condition: string = "";
   previews: VideoMetadata[] = [];
   isError: boolean = false;
   content!: string;
@@ -18,18 +18,18 @@ export class VideoGalleryComponent implements OnInit {
   constructor(public dataService: DataService, private userService: UserService) {}  // добавлен private userService: UserService
 
   ngOnInit(): void {
-    ////////////
-    this.userService.getPublicContent().subscribe(
-      data => {
-        this.content = data;
+    this.dataService.condition$.subscribe((condition) => this.setCondition(condition));
+    this.update(this.condition);
+  }
 
-      },
-      err => {
-        this.content = JSON.parse(err.error).message;
-      }
-    );
-    /////////удалить можно выше
-    this.dataService.findAllPreviews()
+  setCondition(condition: string) {
+    this.condition = condition;
+    console.log("video condition: " + this.condition);
+    this.update(condition);
+  }
+
+  update(condition: string) {
+    this.dataService.findAllPreviewsWithCondition(this.condition)
       .then(res => {
         this.isError = false;
         this.previews = res;
@@ -39,31 +39,3 @@ export class VideoGalleryComponent implements OnInit {
       });
   }
 }
-/*
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
-
-@Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
-})
-export class HomeComponent implements OnInit {
-
-  content: string;
-
-  constructor(private userService: UserService) { }
-
-  ngOnInit(): void {
-    this.userService.getPublicContent().subscribe(
-      data => {
-        this.content = data;
-      },
-      err => {
-        this.content = JSON.parse(err.error).message;
-      }
-    );
-  }
-
-}
- */

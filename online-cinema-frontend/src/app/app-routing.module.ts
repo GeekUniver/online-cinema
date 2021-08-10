@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {VideoGalleryComponent} from "./video-gallery/video-gallery.component";
 import {VideoPlayerComponent} from "./video-player/video-player.component";
 import {VideoUploadComponent} from "./video-upload/video-upload.component";
+import {FilmInfoComponent} from "./film-info/film-info.component";
 import {BoardAdminComponent} from "./board-admin/board-admin.component";
 import {BoardUserComponent} from "./board-user/board-user.component";
 import {ProfileComponent} from "./profile/profile.component";
@@ -12,10 +13,11 @@ import {BoardModeratorComponent} from "./board-moderator/board-moderator.compone
 
 
 const routes: Routes = [
-  //{path:  "", pathMatch:  "full", redirectTo:  "gallery"},
   {path:  "", pathMatch:  "full", redirectTo:  "gallery"},
   {path: "gallery", component: VideoGalleryComponent},
   {path: "player/:id", component: VideoPlayerComponent},
+  {path: "upload", component: VideoUploadComponent},
+  {path: "info/:id", component: FilmInfoComponent},
   {path: "upload", component: VideoUploadComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -30,15 +32,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-/*
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: 'mod', component: BoardModeratorComponent },
-  { path: 'admin', component: BoardAdminComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
-];
-
- */

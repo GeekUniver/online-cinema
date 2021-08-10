@@ -1,15 +1,23 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component,  OnInit} from '@angular/core';
+import {DataService} from "../data.service";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit  {
+  condition: string ="";
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(public dataService: DataService) {
   }
 
+  ngOnInit(): void {
+    this.dataService.condition$.subscribe();
+  }
+
+  setCondition(): void {
+    this.dataService.changeCount(this.condition);
+    this.condition = "";
+  }
 }
