@@ -17,7 +17,7 @@ public class TestController {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_CLIENT') or hasRole('MODERATOR') or hasRole('ROLE_ADMIN')")
     public String userAccess() {
         return "user API";
     }

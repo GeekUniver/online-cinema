@@ -11,7 +11,8 @@ import com.online.cinema.pojo.SignupRequest;
 import com.online.cinema.repository.RoleRepository;
 import com.online.cinema.repository.UserRepository;
 import com.online.cinema.service.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +20,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,28 +32,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
-
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    JwtUtils jwtUtils;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
-
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
@@ -85,8 +80,8 @@ public class AuthController {
         }
 
         User user = new User(signupRequest.getUsername(),
-                signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()));
+                passwordEncoder.encode(signupRequest.getPassword()),
+                signupRequest.getEmail());
 
         Set<String> reqRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -106,14 +101,12 @@ public class AuthController {
                         roles.add(adminRole);
 
                         break;
-//                    case "mod":
-//                        Role modRole = roleRepository
-//                                .findByName(ERole.ROLE_MODERATOR)
-//                                .orElseThrow(() -> new RuntimeException("Error, Role MODERATOR is not found"));
-//                        roles.add(modRole);
-//
-//                        break;
-
+                    case "mod":
+                        Role modRole = roleRepository
+                                .findByName(ERole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error, Role MODERATOR is not found"));
+                        roles.add(modRole);
+                        break;
                     default:
                         Role userRole = roleRepository
                                 .findByName(ERole.ROLE_CLIENT)
@@ -124,6 +117,11 @@ public class AuthController {
         }
         user.setRoles(roles);
         userRepository.save(user);
+        System.out.println(user.getId());
+        System.out.println(user.getLogin());
+        System.out.println(user.getEmail());
+        System.out.println(user.getPassword());
+        System.out.println(user.getRoles());
         return ResponseEntity.ok(new MessageResponse("User CREATED"));
     }
 }
