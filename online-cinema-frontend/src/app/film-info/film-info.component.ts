@@ -26,6 +26,27 @@ export class FilmInfoComponent implements OnInit {
         });
     })
   }
+
+submit() {
+      console.log("Submit button to add a new comment.");
+      console.log("");
+      let form:HTMLFormElement | null = document.forms.namedItem('commentForm');
+      if (form) {
+        let fd = new FormData(form);
+        this.dataService.addNewComment(fd)
+          .then(() => {
+            this.isError = false;
+          })
+          .catch((err) => {
+            this.isError = true;
+            console.error(err);
+          });
+      }
+  }
+
 }
+
+
+
 
 

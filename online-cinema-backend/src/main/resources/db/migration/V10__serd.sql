@@ -1,37 +1,14 @@
-INSERT INTO VIDEO_METADATA (
+insert into VIDEO_METADATA(
     id,
     file_name,
     content_type,
     description,
     file_size,
-    video_length)
-    VALUES
-    (
-    1,
-    'songCat.mp4',
-    'video/mp4',
-    'Super cat',
-    1245635,
-    13908000
-    );
-
-
-INSERT INTO VIDEO_METADATA (
-    id,
-    file_name,
-    content_type,
-    description,
-    file_size,
-    video_length)
-    VALUES
-    (
-    2,
-    'cat.mp4',
-    'video/mp4',
-    'Amazing cat',
-    30144608,
-    163282682
-    );
+    video_length
+)
+values
+(1,'bumerang.mp4',	'video/mp4',	'bumerang',	8071691,	136185000),
+(2,	'duny.mp4',	'video/mp4',	'дюны',	10263710,	221634000);
 
 insert into app_role (name)
 values

@@ -37,4 +37,8 @@ export class DataService {
 
     return this.http.get<VideoMetadata[]>('/api/v1/video/search/' + condition).toPromise();
   }
+
+  public addNewComment(formData: FormData) {
+    return this.http.post('/api/v1/video/addNewComment', formData).toPromise();
+  }
 }

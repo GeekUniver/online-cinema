@@ -18,20 +18,37 @@
   <div class="alert alert-danger" [style.display]="isError ? 'block' : 'none'">
     Can't load the video gallery
   </div>
-
-<div class="container">
-  <div class="row align-items-start">
-    <div class="col">
-      <a routerLink="/player/{{videoMetadata.id}}">
-        <img src="{{videoMetadata.previewUrl}}" alt="..." class="card-img-top">
-      </a>
-      <div class="card-body">
-        <p class="card-text">{{videoMetadata.name}}</p>
+  <div class="container">
+    <div class="row align-items-start">
+      <div class="col">
+        <a routerLink="/player/{{videoMetadata.id}}">
+          <img src="{{videoMetadata.previewUrl}}" alt="..." class="card-img-top">
+        </a>
+        <div class="card-body">
+          <p class="card-text">{{videoMetadata.name}}</p>
+        </div>
+      </div>
+      <div class="col">
+        <p class="card-text">{{videoMetadata.description}}</p>
       </div>
     </div>
-    <div class="col">
-      <p class="card-text">{{videoMetadata.description}}</p>
-    </div>
   </div>
-</div>
+
+  <!-- новая форма для ввода комментария -->
+  <!-- TODO сделать вывод всех комментариев -->
+  <!-- TODO красиво -->
+  <!-- TODO сделать рейтинг -->
+
+  <form id="commentForm" name="commentForm">
+    <div>
+      <label for="comment">Your comment</label>
+      <input type="text" class="form-control" name="comment" id="comment" aria-describedby="Your comment"
+             placeholder="Enter your comment about video">
+      <input type="number" class="form-control" name="videoMetadataId" id="videoMetadataId" value="{{videoMetadata.id}}">
+    </div>
+    <button class="btn btn-dark" (click)="submit()" type="button" >Submit</button>
+  </form>
+  <!-- конец новой формы для ввода комментария -->
+
+
 </div>

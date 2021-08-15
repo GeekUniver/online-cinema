@@ -1,5 +1,6 @@
 package com.online.cinema.controller;
 
+import com.online.cinema.controller.repr.NewCommentRepr;
 import com.online.cinema.exception_handlers.NotFoundException;
 import com.online.cinema.service.FindVideoService;
 import lombok.RequiredArgsConstructor;
@@ -86,6 +87,18 @@ public class VideoController {
 
         try {
             videoService.saveNewVideo(newVideoRepr);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping(path = "/addNewComment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> addNewComment(NewCommentRepr newComment) {
+        log.info(newComment.getComment());
+        log.info(newComment.getVideoMetadataId().toString());
+        try {
+//          todo  videoService.addNewComment(comment);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
