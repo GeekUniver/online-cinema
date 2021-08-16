@@ -19,65 +19,6 @@
     Can't load the video gallery
   </div>
 
-<div class="container">
-  <div class="row align-items-start">
-    <div class="col">
-      <a routerLink="/player/{{videoMetadata.id}}">
-        <img src="{{videoMetadata.previewUrl}}" alt="..." class="card-img-top">
-      </a>
-      <div class="card-body">
-        <p class="card-text">{{videoMetadata.name}}</p>
-      </div>
-    </div>
-    <div class="col">
-      <p class="card-text">{{videoMetadata.description}}</p>
-    </div>
-    <div class="col">
-      <p class="card-text">{{videoMetadata.year_filmed}}</p>
-    </div>
-
-    <div class="col">
-      <div class="col-4" *ngFor="let genre of videoMetadata.genreList">
-        <div class="card-body">
-          <p class="card-text">{{genre.name}}</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="col-4" *ngFor="let country of videoMetadata.countryList">
-        <div class="card-body">
-          <p class="card-text">{{country.name}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-
-<!--<table>-->
-<!--  <tr>-->
-<!--    <td rowspan="3">-->
-<!--      <a routerLink="/player/{{videoMetadata.id}}">-->
-<!--        <img src="{{videoMetadata.previewUrl}}" alt="..." class="card-img-top">-->
-<!--      </a>-->
-<!--    </td>-->
-<!--    <td>-->
-<!--      <p class="card-text">{{videoMetadata.name}}</p>-->
-<!--    </td>-->
-<!--  </tr>-->
-<!--  <tr>-->
-<!--    <td>-->
-<!--      <p class="card-text">{{videoMetadata.description}}</p>-->
-<!--    </td>-->
-<!--  </tr>-->
-<!--  <tr>-->
-<!--    <td>3</td>-->
-<!--  </tr>-->
-<!--</table>-->
-
-
 <div class="container mt-3">
 
   <div class="row">
@@ -90,6 +31,42 @@
     <div class="col-sm-8">
       <h2 class="card-text">{{videoMetadata.name}}</h2>
       <p class="card-text">{{videoMetadata.description}}</p>
+
+      <table cellspacing="20" cellpadding="20">
+        <tr>
+          <td>
+            <p>Страна</p>
+          </td>
+          <td>
+            <div class="horizontal">
+              <div *ngFor="let country of videoMetadata.countryList">
+                <p>{{country.name+ ', '}}</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <p>Жанр</p>
+          </td>
+          <td>
+            <div class="horizontal">
+              <div *ngFor="let genre of videoMetadata.genreList">
+                <p>{{genre.name+ ', '}}</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
     </div>
   </div>
 
