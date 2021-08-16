@@ -58,6 +58,5 @@ public class VideoMetadata {
     /*Съемочная группа*/
     @OneToMany(mappedBy = "videoMetadata", fetch = FetchType.LAZY)
     private List<CrewWithRole> crewWithRole;
-
 }
 
