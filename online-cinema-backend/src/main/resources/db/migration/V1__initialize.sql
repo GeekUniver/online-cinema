@@ -53,9 +53,8 @@ CREATE TABLE video_comment(
                               video_metadata_id bigint not null references video_metadata(id),
                               user_comment_id bigint null references video_comment(id),
                               comment varchar(10240) not null,
-                              dt timestamp with time zone not null default current_timestamp,
-    deleted smallint default 0 not null
-);
+                              dt timestamp with time zone default current_timestamp,
+    deleted smallint default 0);
 
 /*Оценки пользователей к видео
   Ссылка на пользователя и видео - обязательный атрибуты

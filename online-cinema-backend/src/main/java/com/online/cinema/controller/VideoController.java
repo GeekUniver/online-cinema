@@ -2,6 +2,8 @@ package com.online.cinema.controller;
 
 import com.online.cinema.controller.repr.NewCommentRepr;
 import com.online.cinema.exception_handlers.NotFoundException;
+import com.online.cinema.persist.VideoComment;
+import com.online.cinema.service.CommentService;
 import com.online.cinema.service.FindVideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class VideoController {
 
     private final VideoService videoService;
     private final FindVideoService findVideoService;
+    private final CommentService commentService;
 
     @GetMapping("/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
@@ -97,8 +100,9 @@ public class VideoController {
     public ResponseEntity<Void> addNewComment(NewCommentRepr newComment) {
         log.info(newComment.getComment());
         log.info(newComment.getVideoMetadataId().toString());
+        log.info(newComment.getAppUserId().toString());
         try {
-//          todo  videoService.addNewComment(comment);
+            commentService.save(newComment);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

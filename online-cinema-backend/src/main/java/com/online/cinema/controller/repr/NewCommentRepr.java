@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class NewCommentRepr {
 
     private String comment;
-//    private Long appUserId;    //TODO
+    private Long appUserId;    //TODO
     private Long videoMetadataId;
 //    private Long userCommentId; /* not mpv, TODO*/
 }

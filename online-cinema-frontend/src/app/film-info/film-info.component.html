@@ -39,16 +39,18 @@
   <!-- TODO красиво -->
   <!-- TODO сделать рейтинг -->
 
+
   <form id="commentForm" name="commentForm">
     <div>
       <label for="comment">Your comment</label>
       <input type="text" class="form-control" name="comment" id="comment" aria-describedby="Your comment"
              placeholder="Enter your comment about video">
-      <input type="number" class="form-control" name="videoMetadataId" id="videoMetadataId" value="{{videoMetadata.id}}">
-    </div>
-    <button class="btn btn-dark" (click)="submit()" type="button" >Submit</button>
-  </form>
-  <!-- конец новой формы для ввода комментария -->
+      <input type="number" type="hidden" class="form-control" name="videoMetadataId" id="videoMetadataId" value="{{videoMetadata.id}}">
+      <input type="number" type="hidden" class="form-control" name="appUserId" id="appUserId" value="{{currentUser.id}}">
+       </div>
+       <button class="btn btn-dark" (click)="submit()" type="button" >Submit</button>
+     </form>
+     <!-- конец новой формы для ввода комментария -->
 
 
 </div>

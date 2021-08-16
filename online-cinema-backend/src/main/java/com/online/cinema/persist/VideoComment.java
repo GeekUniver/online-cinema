@@ -1,5 +1,6 @@
 package com.online.cinema.persist;
 
+import com.online.cinema.controller.repr.NewCommentRepr;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,14 +19,13 @@ public class VideoComment{
     private Long id;
 
     @Column(name = "app_user_id")
-    private Long AppUserId;
+    private Long appUserId;
 
     @Column(name = "video_metadata_id")
-    private Long VideoMetadataId;
+    private Long videoMetadataId;
 
     @Column(name = "user_comment_id")
-    private Long UserCommentId;
-
+    private Long userCommentId;
 
     @Column(name = "comment")
     private String comment;
@@ -35,5 +35,11 @@ public class VideoComment{
 
     @Column(name = "deleted")
     private Integer deleted;
+
+    public VideoComment(NewCommentRepr newCommentRepr){
+        this.comment = newCommentRepr.getComment();
+        this.appUserId = newCommentRepr.getAppUserId();
+        this.videoMetadataId = newCommentRepr.getVideoMetadataId();
+    }
 
 }

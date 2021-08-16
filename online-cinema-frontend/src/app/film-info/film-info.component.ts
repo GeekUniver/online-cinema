@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {VideoMetadata} from "../video-metadata";
 import {DataService} from "../data.service";
 import {ActivatedRoute} from "@angular/router";
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-film-info',
@@ -10,11 +11,15 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class FilmInfoComponent implements OnInit {
   isError: boolean = false;
+  currentUser: any;
   public videoMetadata: VideoMetadata  = new VideoMetadata(0, '', '', '', '', '',0);
-  constructor(private route: ActivatedRoute, public dataService: DataService) { }
+  constructor(private route: ActivatedRoute, public dataService: DataService, private token: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(param => {
+
+   this.currentUser = this.token.getUser();
+
+   this.route.params.subscribe(param => {
       console.log(param)
       this.dataService.findById(param.id)
         .then((vmd) => {
@@ -29,7 +34,7 @@ export class FilmInfoComponent implements OnInit {
 
 submit() {
       console.log("Submit button to add a new comment.");
-      console.log("");
+
       let form:HTMLFormElement | null = document.forms.namedItem('commentForm');
       if (form) {
         let fd = new FormData(form);

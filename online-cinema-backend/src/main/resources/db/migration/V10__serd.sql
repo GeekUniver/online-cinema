@@ -17,7 +17,7 @@ values
 
 insert into app_user (login, password, email)
 values
-('bob', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'bob_johnson@gmail.com'),
+('bob', '$2y$10$luL/J54hVcE82GWcjAT.4e3c9kFtrPN1EiwANuXw/laYoZiGodjc.', 'bob_johnson@gmail.com'),
 ('john', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'john_johnson@gmail.com'),
 ('Johny', '$2a$12$o3dvKAd7EhxzJaLWwPdTuuh3//C8EYyXo5X7UEDCKw9by6l1gBXQu', 'johny_johnsony@gmail.com');
 
