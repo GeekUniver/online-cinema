@@ -15,4 +15,9 @@ public class ResponseException {
         this.message = message;
         this.timestamp = timestamp;
     }
+
+    public ResponseException(int status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 }

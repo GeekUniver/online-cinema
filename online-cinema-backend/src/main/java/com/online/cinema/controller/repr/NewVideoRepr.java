@@ -7,8 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @Data
 public class NewVideoRepr {
-
     private String description;
-
     private MultipartFile file;
 }
