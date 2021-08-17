@@ -100,6 +100,7 @@ public class VideoController {
     public ResponseEntity<Void> addNewComment(NewCommentRepr newComment) {
         log.info(newComment.getComment());
         log.info(newComment.getVideoMetadataId().toString());
+        if (newComment.getAppUserId() == null) newComment.setAppUserId(10l);
         log.info(newComment.getAppUserId().toString());
         try {
             commentService.save(newComment);

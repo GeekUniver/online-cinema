@@ -6,6 +6,9 @@ import com.online.cinema.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -13,8 +16,7 @@ public class CommentService {
 
     public void save (NewCommentRepr newCommentRepr){
         VideoComment newComment = new VideoComment(newCommentRepr);
+        newComment.setDt(OffsetDateTime.now());
         commentRepository.save(newComment);
-
-
     }
 }
