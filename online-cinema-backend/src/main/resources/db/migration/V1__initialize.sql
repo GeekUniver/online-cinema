@@ -28,8 +28,8 @@ CREATE TABLE app_role(
 );
 
 INSERT INTO app_role(name) VALUES
-            ('ROLE_CLIENT'),
-            ('ROLE_ADMIN');
+            ('ROLE_ADMIN'),
+            ('ROLE_CLIENT');
 
 /*Роли пользователей, таблица соответствия*/
 CREATE TABLE app_user_role(
@@ -38,8 +38,9 @@ CREATE TABLE app_user_role(
 );
 
 INSERT INTO app_user_role(app_user_id, app_role_id) VALUES
-            (1, 1),
-            (2, 2);
+            (1, 2),
+            (2, 2),
+            (3, 1);
 
 /*Комментарии пользователей к видео
   Ссылка на пользователя и видео - обязательные атрибуты
