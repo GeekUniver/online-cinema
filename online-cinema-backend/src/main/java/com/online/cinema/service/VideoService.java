@@ -46,6 +46,10 @@ public class VideoService {
                 .collect(Collectors.toList());
     }
 
+    public long countFindAllVideoMetadata() {
+        return videoMetadataRepository.findAll().size();
+    }
+
 
     public Optional<VideoMetadataRepr> findById(Long id) {
         return videoMetadataRepository.findById(id)

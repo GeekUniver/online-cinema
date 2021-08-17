@@ -16,6 +16,7 @@ import com.online.cinema.service.VideoService;
 import com.online.cinema.controller.repr.NewVideoRepr;
 
 import java.io.InputStream;
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Supplier;
@@ -33,6 +34,7 @@ public class VideoController {
 
     @GetMapping("/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
+
         return videoService.findAllVideoMetadata();
     }
 
@@ -44,6 +46,12 @@ public class VideoController {
     @GetMapping("/{id}")
     public VideoMetadataRepr findVideoMetadataById(@PathVariable("id") Long id) throws Throwable {
         return videoService.findById(id).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + id));
+    }
+
+    @GetMapping("/random")
+    public VideoMetadataRepr findVideoMetadataByRandomId() throws Throwable {
+        long randomId = (int)(Math.random() * (videoService.countFindAllVideoMetadata()));
+        return videoService.findById(randomId).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + randomId));
     }
 
     @GetMapping(value = "/preview/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
