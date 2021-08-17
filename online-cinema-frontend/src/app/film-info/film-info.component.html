@@ -32,7 +32,18 @@
       <h2 class="card-text">{{videoMetadata.name}}</h2>
       <p class="card-text">{{videoMetadata.description}}</p>
 
-      <table cellspacing="20" cellpadding="20">
+      <table cellspacing="20" cellpadding="5">
+        <tr>
+          <td>
+            <p>Год выхода</p>
+          </td>
+          <td>
+            <div class="horizontal">
+                <p>{{videoMetadata.year_filmed}}</p>
+            </div>
+          </td>
+        </tr>
+
         <tr>
           <td>
             <p>Страна</p>
@@ -40,7 +51,7 @@
           <td>
             <div class="horizontal">
               <div *ngFor="let country of videoMetadata.countryList">
-                <p>{{country.name+ ', '}}</p>
+                <p>{{country.name}}&nbsp;</p>
               </div>
             </div>
           </td>
@@ -53,7 +64,7 @@
           <td>
             <div class="horizontal">
               <div *ngFor="let genre of videoMetadata.genreList">
-                <p>{{genre.name+ ', '}}</p>
+                <p>{{genre.name}}&nbsp;</p>
               </div>
             </div>
           </td>
@@ -62,12 +73,7 @@
           <td></td>
           <td></td>
         </tr>
-        <tr>
-          <td></td>
-          <td></td>
-        </tr>
       </table>
     </div>
   </div>
-
 </div>

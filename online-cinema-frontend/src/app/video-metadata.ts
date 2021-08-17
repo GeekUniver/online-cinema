@@ -12,25 +12,6 @@ export class VideoMetadata {
               public year_filmed: number,
               public genreList: Genre[],
               public countryList: Country[]
-              // private List<CrewWithRole> crewWithRole;
               ) {
   }
 }
-// previews: VideoMetadata[] = [];
-// private String description;
-// private MultipartFile file;
-//
-// private String name;
-//
-// private Integer year_filmed;
-//
-// /*Список жанров фильма*/
-//
-// private List<Genre> genreList;
-//
-// /*Страны производства фильма*/
-//
-// private List<Country> countryList;
-//
-// /*Съемочная группа*/
-// private List<CrewWithRole> crewWithRole;
