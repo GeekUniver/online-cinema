@@ -16,7 +16,15 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
 
+    public Role(ERole name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

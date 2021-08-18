@@ -12,6 +12,13 @@ import { VideoUploadComponent } from './video-upload/video-upload.component';
 import {FormsModule} from "@angular/forms";
 import { FilmInfoComponent } from './film-info/film-info.component';
 
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import { BoardAdminComponent } from './board-admin/board-admin.component';
+import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
+import { BoardUserComponent } from './board-user/board-user.component';
+import { AuthInterceptor } from "./ _helpers/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -22,14 +29,21 @@ import { FilmInfoComponent } from './film-info/film-info.component';
     VideoPlayerComponent,
     VideoUploadComponent,
     FilmInfoComponent,
+    VideoUploadComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent,
+    BoardAdminComponent,
+    BoardModeratorComponent,
+    BoardUserComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        FormsModule
-    ],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  providers: [AuthInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

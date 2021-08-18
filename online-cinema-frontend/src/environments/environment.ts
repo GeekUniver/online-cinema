@@ -6,6 +6,14 @@ export const environment = {
   production: false
 };
 
+export const wsUrl = "//localhost:8080"
+
+export const wsHost = {
+  auth: wsUrl + "/api/auth/signin",
+  user: wsUrl + "/api/user"
+
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
