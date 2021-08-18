@@ -1,11 +1,10 @@
 package com.online.cinema.persist;
 
-import com.online.cinema.controller.repr.NewCommentRepr;
+import com.online.cinema.controller.repr.CommentRepr;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -37,10 +36,10 @@ public class VideoComment{
     @Column(name = "deleted")
     private Integer deleted;
 
-    public VideoComment(NewCommentRepr newCommentRepr){
-        this.comment = newCommentRepr.getComment();
-        this.appUserId = newCommentRepr.getAppUserId();
-        this.videoMetadataId = newCommentRepr.getVideoMetadataId();
+    public VideoComment(CommentRepr commentRepr){
+        this.comment = commentRepr.getComment();
+        this.appUserId = commentRepr.getAppUserId();
+        this.videoMetadataId = commentRepr.getVideoMetadataId();
     }
 
 }

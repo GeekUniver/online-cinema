@@ -3,6 +3,7 @@ import {VideoMetadata} from "../video-metadata";
 import {DataService} from "../data.service";
 import {ActivatedRoute} from "@angular/router";
 import { TokenStorageService } from '../_services/token-storage.service';
+import {CommentRepr} from "../commentrepr";
 
 @Component({
   selector: 'app-film-info',
@@ -12,8 +13,10 @@ import { TokenStorageService } from '../_services/token-storage.service';
 export class FilmInfoComponent implements OnInit {
   isError: boolean = false;
   currentUser: any;
+  comments: CommentRepr[] = [];
   public videoMetadata: VideoMetadata  = new VideoMetadata(0, '', '', '', '', '',0);
   constructor(private route: ActivatedRoute, public dataService: DataService, private token: TokenStorageService) { }
+
 
   ngOnInit(): void {
 
@@ -29,12 +32,13 @@ export class FilmInfoComponent implements OnInit {
         .catch(err => {
           this.isError = true;
         });
-    })
+    });
+    this.getComments();
+
   }
 
 submit() {
-      console.log("Submit button to add a new comment.");
-
+//      console.log("Submit button to add a new comment.");
       let form:HTMLFormElement | null = document.forms.namedItem('commentForm');
       if (form) {
         let fd = new FormData(form);
@@ -47,7 +51,18 @@ submit() {
             console.error(err);
           });
       }
+      this.getComments();
+  }
 
+  getComments() {
+    this.dataService.findAllComments()
+      .then((res) => {
+            this.isError = false;
+            this.comments = res;
+          })
+          .catch((err) => {
+            this.isError = true;
+          });
   }
 
 

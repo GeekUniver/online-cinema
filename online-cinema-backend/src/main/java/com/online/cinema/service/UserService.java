@@ -4,6 +4,7 @@ import com.online.cinema.persist.Role;
 import com.online.cinema.persist.User;
 import com.online.cinema.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -41,5 +43,12 @@ public class UserService implements UserDetailsService {
         //todo UserEmailNotFoundException после того, как Рома разберётся с исключениями
         //todo либо заменить на Optional
         return userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("Пользователь не найден" + email));
+    }
+
+    public User findById (Long id){
+        log.info("in public User findById (Long id");
+        User user = userRepository.findById(id).get();
+        log.info("user: " + user);
+        return user;
     }
 }

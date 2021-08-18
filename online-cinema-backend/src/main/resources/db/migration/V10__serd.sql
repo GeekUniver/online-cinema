@@ -21,9 +21,6 @@ values
 ('john', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'john_johnson@gmail.com'),
 ('Johny', '$2a$12$o3dvKAd7EhxzJaLWwPdTuuh3//C8EYyXo5X7UEDCKw9by6l1gBXQu', 'johny_johnsony@gmail.com');
 
-insert into app_user (id, login, password, email)
-values
-(10,'UnauthorizedUser', '$2a$12$o3dvKAd7EhxzJaLWwPdTuuh3//C8EYyXo5X7UEDCKw9by6l1gBXQu', 'UnauthorizedUser@UnauthorizedUser.com');
 
 insert into app_user_role (app_user_id, app_role_id)
 values

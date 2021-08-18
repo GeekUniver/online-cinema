@@ -40,18 +40,36 @@
   <!-- TODO сделать рейтинг -->
 
 
-  <form id="commentForm" name="commentForm">
-    <div>
-      <label for="comment">Your comment</label>
-      <input type="text" class="form-control" name="comment" id="comment" aria-describedby="Your comment"
-             placeholder="Enter your comment about video">
-      <input type="number" type="hidden" class="form-control" name="videoMetadataId" id="videoMetadataId" value="{{videoMetadata.id}}">
-      <input type="number" type="hidden" class="form-control" name="appUserId" id="appUserId" value="{{currentUser.id}}">
-       </div>
-       <button class="btn btn-dark" (click)="submit()" type="button" type="reset">Submit</button>
-     </form>
-     <!-- конец новой формы для ввода комментария -->
-
-
-
+  <div class="comments">
+    <h4 class="title-comments">Комментарии к фильму</h4>
+    <div class="media-list" *ngFor="let comment of comments">
+      <div class="media">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object img-rounded" src="https://pp.userapi.com/-ZL783eHSiya6rWkNsdZwWYrLdSOb9zWn5EaUg/ISgbr46L9bo.jpg" alt="">
+            <!-- https://d1fj5empgslmyx.cloudfront.net/uploads/user/34428/thumb_avatar_1608032548.jpg --> <!--75x75-->
+          </a>
+        </div>
+        <div class="media-body">
+          <div class="media-heading">
+            <div class="author">{{comment.appUserLogin}}</div>
+              <div class="metadata">
+                <span class="date">{{comment.data}}</span>
+              </div>
+            </div>
+          <div class="media-text text-justify">{{comment.comment}}</div>
+        </div>
+      </div>
+    </div>
+      <form id="commentForm" name="commentForm">
+        <div>
+          <input type="text" class="form-control" name="comment" id="comment" placeholder="Оставь свой комментарий">
+          <input type="number" type="hidden" class="form-control" name="videoMetadataId" id="videoMetadataId" value="{{videoMetadata.id}}">
+          <input type="number" type="hidden" class="form-control" name="appUserId" id="appUserId" value="{{currentUser.id}}">
+          <input type="number" type="hidden" class="form-control" name="appUserLogin" id="appUserLogin" value="{{currentUser.username}}">
+        </div>
+        <button class="btn btn-dark" (click)="submit()" type="button" type="reset">Отправить</button>
+      </form>
+  </div>
 </div>
+
