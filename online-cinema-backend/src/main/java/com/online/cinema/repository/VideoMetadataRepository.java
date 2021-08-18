@@ -68,6 +68,4 @@ public interface VideoMetadataRepository extends JpaRepository<VideoMetadata, Lo
     public List<VideoMetadata> findAllByNameContaining(String name);
 
     public List<VideoMetadata> findAllByDescriptionContaining(String description);
-
-
 }

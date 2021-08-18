@@ -1,6 +1,8 @@
 package com.online.cinema.service;
 
 import com.online.cinema.persist.CrewWithRole;
+import com.online.cinema.persist.Genre;
+import com.online.cinema.repository.GenreRepository;
 import com.online.cinema.repository.VideoMetadataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,7 @@ public class VideoService {
     private String dataFolder;
 
     private final VideoMetadataRepository videoMetadataRepository;
+    private final GenreRepository genreRepository;
 
     private final FrameGrabberService frameGrabberService;
 
@@ -79,31 +82,6 @@ public class VideoService {
                         return Optional.empty();
                     }
                 });
-    }
-
-    @Transactional
-    public void saveNewVideo(NewVideoRepr newVideoRepr) {
-        VideoMetadata metadata = new VideoMetadata();
-        metadata.setFileName(newVideoRepr.getFile().getOriginalFilename());
-        metadata.setContentType(newVideoRepr.getFile().getContentType());
-        metadata.setFileSize(newVideoRepr.getFile().getSize());
-        metadata.setDescription(newVideoRepr.getDescription());
-        videoMetadataRepository.save(metadata);
-
-        Path directory = Path.of(dataFolder, metadata.getId().toString());
-        try {
-            Files.createDirectory(directory);
-            Path file = Path.of(directory.toString(), newVideoRepr.getFile().getOriginalFilename());
-            try (OutputStream output = Files.newOutputStream(file, CREATE, WRITE)) {
-                newVideoRepr.getFile().getInputStream().transferTo(output);
-            }
-            long videoLength = frameGrabberService.generatePreviewPictures(file);
-            metadata.setVideoLength(videoLength);
-            videoMetadataRepository.save(metadata);
-        } catch (IOException ex) {
-            log.error("", ex);
-            throw new IllegalStateException(ex);
-        }
     }
 
     public Optional<StreamBytesInfo> getStreamBytes(Long id, HttpRange range) {

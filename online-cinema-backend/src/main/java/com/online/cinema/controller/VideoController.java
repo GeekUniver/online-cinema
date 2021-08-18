@@ -1,6 +1,7 @@
 package com.online.cinema.controller;
 
 import com.online.cinema.exception_handlers.NotFoundException;
+import com.online.cinema.persist.Genre;
 import com.online.cinema.service.FindVideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,6 @@ import com.online.cinema.service.VideoService;
 import com.online.cinema.controller.repr.NewVideoRepr;
 
 import java.io.InputStream;
-import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Supplier;
@@ -86,22 +86,6 @@ public class VideoController {
                 streamBytesInfo.getRangeStart(), streamBytesInfo.getRangeEnd(),
                 new DecimalFormat("###.##").format(100.0 * streamBytesInfo.getRangeStart() / streamBytesInfo.getFileSize()));
         return builder.body(streamBytesInfo.getResponseBody());
-    }
-
-    @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> uploadVideo(NewVideoRepr newVideoRepr) {
-        log.info(newVideoRepr.getDescription());
-
-        try {
-            videoService.saveNewVideo(newVideoRepr);
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-    public ResponseEntity<Void> updateVideo() {
-        return null;
     }
 }
 

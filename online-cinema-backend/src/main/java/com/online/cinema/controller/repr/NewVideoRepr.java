@@ -20,6 +20,7 @@ public class NewVideoRepr {
 
     private Integer year_filmed;
 
+
     /*Список жанров фильма*/
 
     private List<Genre> genreList;
