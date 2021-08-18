@@ -5,10 +5,31 @@
   </div>
 
   <div class="mb-3">
+    <label for="name">Video name</label>
+    <input type="text" class="form-control" name="name" id="name" aria-describedby="Video name"
+           placeholder="Enter name for video">
+  </div>
+
+  <div class="mb-3">
     <label for="description">Video description</label>
     <input type="text" class="form-control" name="description" id="description" aria-describedby="Video description"
            placeholder="Enter description for video">
   </div>
+
+  <div class="mb-3">
+    <label for="year_filmed">Year</label>
+    <input type="text" class="form-control" name="year_filmed" id="year_filmed" aria-describedby="Video year_filmed"
+           placeholder="Enter the year of the film's release">
+  </div>
+
+<!--  <div class="mb-3">-->
+<!--    <label for="genreList">Genre</label>-->
+<!--    <p><select type="text" class="form-control" name="genreList" id="genreList" aria-describedby="Video genre"-->
+<!--               placeholder="Enter description for video">-->
+<!--      <option>Выберите из списка</option>-->
+<!--      <option *ngFor="let genre of genres">{{genre.name}}</option>-->
+<!--    </select></p>-->
+<!--  </div>-->
 
   <div class="mb-3">
     <label for="videoFile">Example file input</label>
@@ -16,3 +37,5 @@
   </div>
   <button class="btn btn-dark" (click)="submit()" type="button" >Submit</button>
 </form>
+
+

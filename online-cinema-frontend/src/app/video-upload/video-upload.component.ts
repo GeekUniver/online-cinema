@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from "../data.service";
 import {Router} from "@angular/router";
+import {Genre} from "../Genre";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthInterceptor} from "../ _helpers/auth.interceptor";
 
 @Component({
   selector: 'app-video-upload',
@@ -10,10 +13,24 @@ import {Router} from "@angular/router";
 export class VideoUploadComponent implements OnInit {
 
   isError: boolean = false;
+  genres: Genre[] = [];
+  form: FormGroup;
 
-  constructor(private dataService: DataService, private router: Router) { }
+  constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
+    this.form = this.fb.group({
+      checkArray: this.fb.array([], [Validators.required])
+    })
+  }
 
   ngOnInit(): void {
+    this.dataService.findAllGenres()
+      .then(res => {
+        this.isError = false;
+        this.genres = res;
+      })
+      .catch(err => {
+        this.isError = true;
+      });
   }
 
   submit() {

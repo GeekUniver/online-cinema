@@ -1,6 +1,7 @@
 package com.online.cinema.controller;
 
 import com.online.cinema.exception_handlers.NotFoundException;
+import com.online.cinema.persist.Genre;
 import com.online.cinema.service.FindVideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ public class VideoController {
 
     @GetMapping("/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
+
         return videoService.findAllVideoMetadata();
     }
 
@@ -44,6 +46,12 @@ public class VideoController {
     @GetMapping("/{id}")
     public VideoMetadataRepr findVideoMetadataById(@PathVariable("id") Long id) throws Throwable {
         return videoService.findById(id).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + id));
+    }
+
+    @GetMapping("/random")
+    public VideoMetadataRepr findVideoMetadataByRandomId() throws Throwable {
+        long randomId = (int)(Math.random() * (videoService.countFindAllVideoMetadata()));
+        return videoService.findById(randomId).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + randomId));
     }
 
     @GetMapping(value = "/preview/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
@@ -78,18 +86,6 @@ public class VideoController {
                 streamBytesInfo.getRangeStart(), streamBytesInfo.getRangeEnd(),
                 new DecimalFormat("###.##").format(100.0 * streamBytesInfo.getRangeStart() / streamBytesInfo.getFileSize()));
         return builder.body(streamBytesInfo.getResponseBody());
-    }
-
-    @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> uploadVideo(NewVideoRepr newVideoRepr) {
-        log.info(newVideoRepr.getDescription());
-
-        try {
-            videoService.saveNewVideo(newVideoRepr);
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
 

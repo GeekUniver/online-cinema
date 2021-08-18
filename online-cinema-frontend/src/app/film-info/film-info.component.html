@@ -19,19 +19,61 @@
     Can't load the video gallery
   </div>
 
-<div class="container">
-  <div class="row align-items-start">
-    <div class="col">
+<div class="container mt-3">
+
+  <div class="row">
+    <div class="col-sm-4">
       <a routerLink="/player/{{videoMetadata.id}}">
         <img src="{{videoMetadata.previewUrl}}" alt="..." class="card-img-top">
       </a>
-      <div class="card-body">
-        <p class="card-text">{{videoMetadata.name}}</p>
-      </div>
     </div>
-    <div class="col">
+
+    <div class="col-sm-8">
+      <h2 class="card-text">{{videoMetadata.name}}</h2>
       <p class="card-text">{{videoMetadata.description}}</p>
+
+      <table cellspacing="20" cellpadding="5">
+        <tr>
+          <td>
+            <p>Год выхода</p>
+          </td>
+          <td>
+            <div class="horizontal">
+                <p>{{videoMetadata.year_filmed}}</p>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <p>Страна</p>
+          </td>
+          <td>
+            <div class="horizontal">
+              <div *ngFor="let country of videoMetadata.countryList">
+                <p>{{country.name}}&nbsp;</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <p>Жанр</p>
+          </td>
+          <td>
+            <div class="horizontal">
+              <div *ngFor="let genre of videoMetadata.genreList">
+                <p>{{genre.name}}&nbsp;</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
     </div>
   </div>
-</div>
 </div>

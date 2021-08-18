@@ -1,14 +1,11 @@
 insert into app_user(login, password, email)
 values('admin', '123', 'admin@yandex.ru');
 
-insert into app_role(name)
-values ('admin');
-
 insert into app_user_role(
     app_user_id,
     app_role_id)
 values
-    (1,1);
+    (7,1);
 
 
 /*Жанры фильмов*/

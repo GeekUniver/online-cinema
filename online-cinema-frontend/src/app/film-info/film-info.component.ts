@@ -10,7 +10,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class FilmInfoComponent implements OnInit {
   isError: boolean = false;
-  public videoMetadata: VideoMetadata  = new VideoMetadata(0, '', '', '', '', '',0);
+  public videoMetadata: VideoMetadata  = new VideoMetadata(0, '', '', '', '', '',0, [], []);
   constructor(private route: ActivatedRoute, public dataService: DataService) { }
 
   ngOnInit(): void {
