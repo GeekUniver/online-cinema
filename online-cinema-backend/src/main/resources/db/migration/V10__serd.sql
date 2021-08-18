@@ -33,11 +33,6 @@ INSERT INTO VIDEO_METADATA (
     163282682
     );
 
-insert into app_role (name)
-values
-('ROLE_USER'),
-('ROLE_ADMIN');
-
 insert into app_user (login, password, email)
 values
 ('bob', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'bob_johnson@gmail.com'),
@@ -46,6 +41,6 @@ values
 
 insert into app_user_role (app_user_id, app_role_id)
 values
-(1, 1),
-(2, 2),
-(3, 2);
+(4, 2),
+(5, 2),
+(6, 2);

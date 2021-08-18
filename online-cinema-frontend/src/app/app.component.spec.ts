@@ -24,6 +24,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('geek-tube-angular-frontend');
+
   });
 
   it('should render title', () => {
