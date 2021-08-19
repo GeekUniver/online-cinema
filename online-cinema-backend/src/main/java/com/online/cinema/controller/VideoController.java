@@ -1,7 +1,9 @@
 package com.online.cinema.controller;
 
+import com.online.cinema.controller.repr.CommentRepr;
 import com.online.cinema.exception_handlers.NotFoundException;
 import com.online.cinema.persist.Genre;
+import com.online.cinema.service.CommentService;
 import com.online.cinema.service.FindVideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class VideoController {
 
     private final VideoService videoService;
     private final FindVideoService findVideoService;
+    private final CommentService commentService;
 
     @GetMapping("/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
@@ -50,7 +53,7 @@ public class VideoController {
 
     @GetMapping("/random")
     public VideoMetadataRepr findVideoMetadataByRandomId() throws Throwable {
-        long randomId = (int)(Math.random() * (videoService.countFindAllVideoMetadata()));
+        long randomId = (int) (Math.random() * (videoService.countFindAllVideoMetadata()));
         return videoService.findById(randomId).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + randomId));
     }
 
@@ -86,6 +89,16 @@ public class VideoController {
                 streamBytesInfo.getRangeStart(), streamBytesInfo.getRangeEnd(),
                 new DecimalFormat("###.##").format(100.0 * streamBytesInfo.getRangeStart() / streamBytesInfo.getFileSize()));
         return builder.body(streamBytesInfo.getResponseBody());
+    }
+
+    @GetMapping("/comments")
+    public List<CommentRepr> findAllComments() {
+        return commentService.findAllComments();
+    }
+
+    @GetMapping("/comments/{id}")
+    public List<CommentRepr> findCommentsByVideoId(@PathVariable("id") Long id) {
+        return commentService.findCommentsByVideoId(id);
     }
 }
 
