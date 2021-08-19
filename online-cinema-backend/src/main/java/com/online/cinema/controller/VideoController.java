@@ -97,11 +97,7 @@ public class VideoController {
 
     @PostMapping(path = "/addNewComment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> addNewComment(CommentRepr newComment) {
-        log.info(newComment.getComment());
-        log.info(newComment.getVideoMetadataId().toString());
-        if (newComment.getAppUserId() == null) newComment.setAppUserId(10l);
-        log.info(newComment.getAppUserId().toString());
-        log.info(newComment.getAppUserLogin());
+        if (newComment.getAppUserId() == null) return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
         try {
             commentService.save(newComment);
         } catch (Exception ex) {
@@ -113,6 +109,11 @@ public class VideoController {
     @GetMapping("/comments")
     public List<CommentRepr> findAllComments() {
         return commentService.findAllComments();
+    }
+
+    @GetMapping("/comments/{id}")
+    public List<CommentRepr> findCommentsByVideoId(@PathVariable("id") Long id) {
+        return commentService.findCommentsByVideoId(id);
     }
 }
 

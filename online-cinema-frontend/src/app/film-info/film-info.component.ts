@@ -13,6 +13,7 @@ import {CommentRepr} from "../commentrepr";
 export class FilmInfoComponent implements OnInit {
   isError: boolean = false;
   currentUser: any;
+  videoId: number = 0;
   comments: CommentRepr[] = [];
   public videoMetadata: VideoMetadata  = new VideoMetadata(0, '', '', '', '', '',0);
   constructor(private route: ActivatedRoute, public dataService: DataService, private token: TokenStorageService) { }
@@ -24,6 +25,7 @@ export class FilmInfoComponent implements OnInit {
 
    this.route.params.subscribe(param => {
       console.log(param)
+      this.videoId=param.id
       this.dataService.findById(param.id)
         .then((vmd) => {
           this.videoMetadata = vmd;
@@ -33,12 +35,11 @@ export class FilmInfoComponent implements OnInit {
           this.isError = true;
         });
     });
-    this.getComments();
+    this.getCommentsByVideoId(this.videoId);
 
   }
 
 submit() {
-//      console.log("Submit button to add a new comment.");
       let form:HTMLFormElement | null = document.forms.namedItem('commentForm');
       if (form) {
         let fd = new FormData(form);
@@ -51,11 +52,11 @@ submit() {
             console.error(err);
           });
       }
-      this.getComments();
+      this.getCommentsByVideoId(this.videoId);
   }
 
-  getComments() {
-    this.dataService.findAllComments()
+  getCommentsByVideoId(videoId : number) {
+    this.dataService.findCommentsByVideoId(this.videoId)
       .then((res) => {
             this.isError = false;
             this.comments = res;

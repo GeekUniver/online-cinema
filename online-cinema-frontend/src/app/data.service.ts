@@ -43,8 +43,12 @@ export class DataService {
     return this.http.post('/api/v1/video/addNewComment', formData).toPromise();
   }
 
-   public findAllComments() {
-      return this.http.get<CommentRepr[]>('/api/v1/video/comments').toPromise()
-    }
+  public findAllComments() {
+     return this.http.get<CommentRepr[]>('/api/v1/video/comments').toPromise()
+  }
+
+  public findCommentsByVideoId(id : number) {
+     return this.http.get<CommentRepr[]>('/api/v1/video/comments/' + id).toPromise()
+  }
 
 }

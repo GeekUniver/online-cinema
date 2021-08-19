@@ -38,4 +38,14 @@ public class CommentService {
         return listCommentRepr;
     }
 
+    public List<CommentRepr> findCommentsByVideoId(Long id) {
+        List<CommentRepr> listCommentRepr = commentRepository.findByVideoMetadataId(id).stream()
+                .map(videoComment -> new CommentRepr(videoComment))
+                .collect(Collectors.toList());
+        for (CommentRepr commentRepr : listCommentRepr) {
+            commentRepr.setAppUserLogin(userService.findById(commentRepr.getAppUserId()).getLogin());
+        }
+        return listCommentRepr;
+    }
+
 }
