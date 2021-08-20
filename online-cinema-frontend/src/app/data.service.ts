@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {VideoMetadata} from "./video-metadata";
+import {CommentRepr} from "./commentrepr";
 import {Genre} from "./Genre";
 import {AuthInterceptor} from "./ _helpers/auth.interceptor";
 import {TokenStorageService} from "./_services/token-storage.service";
@@ -50,4 +51,17 @@ export class DataService {
   findAllGenres() {
     return this.http.get<Genre[]>('/api/v1/admin/genres').toPromise();
   }
+
+  public addNewComment(formData: FormData) {
+    return this.http.post('/api/v1/video/addNewComment', formData).toPromise();
+  }
+
+  public findAllComments() {
+     return this.http.get<CommentRepr[]>('/api/v1/video/comments').toPromise()
+  }
+
+  public findCommentsByVideoId(id : number) {
+     return this.http.get<CommentRepr[]>('/api/v1/video/comments/' + id).toPromise()
+  }
+
 }
