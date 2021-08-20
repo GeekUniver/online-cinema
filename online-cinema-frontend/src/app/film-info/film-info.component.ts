@@ -24,8 +24,6 @@ export class FilmInfoComponent implements OnInit {
     //console.log(this.currentUser)
     //console.log(this.currentUser.username)
     this.route.params.subscribe(param => {
-      console.log(param)
-      this.videoId=param.id
       this.dataService.findById(param.id)
         .then((vmd) => {
           this.videoMetadata = vmd;

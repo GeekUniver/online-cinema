@@ -1,0 +1,3 @@
+INSERT INTO app_role(name) VALUES
+('ROLE_ADMIN'),
+('ROLE_CLIENT');

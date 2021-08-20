@@ -9,11 +9,12 @@ import { TokenStorageService } from '../_services/token-storage.service';
 })
 export class HeaderComponent implements OnInit  {
   condition: string ="";
-  private roles!: string[];
+  roles!: string[];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
   username!: string;
+  email!: string;
 
   constructor(private tokenStorageService: TokenStorageService, public dataService: DataService) {
   }
@@ -23,13 +24,15 @@ export class HeaderComponent implements OnInit  {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
+      let user = this.tokenStorageService.getUser();
+
       this.roles = user.roles;
 
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
       this.username = user.username;
+      this.email = user.email;
     }
   }
 
