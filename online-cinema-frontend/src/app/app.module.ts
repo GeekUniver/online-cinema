@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -44,7 +44,9 @@ import { AuthInterceptor } from "./ _helpers/auth.interceptor";
         HttpClientModule,
         ReactiveFormsModule
     ],
-  providers: [AuthInterceptor],
+  providers: [
+    AuthInterceptor,
+    {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

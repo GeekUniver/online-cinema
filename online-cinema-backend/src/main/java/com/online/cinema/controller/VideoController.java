@@ -17,6 +17,7 @@ import com.online.cinema.service.VideoService;
 import com.online.cinema.controller.repr.NewVideoRepr;
 
 import java.io.InputStream;
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Supplier;
@@ -33,8 +34,12 @@ public class VideoController {
     private final FindVideoService findVideoService;
 
     @GetMapping("/all")
-    public List<VideoMetadataRepr> findAllVideoMetadata() {
-
+    public List<VideoMetadataRepr> findAllVideoMetadata(Principal principal) {
+//        if (principal == null) {
+//            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<principal:null>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        } else {
+//            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<principal:" + principal.getName() + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//        }
         return videoService.findAllVideoMetadata();
     }
 

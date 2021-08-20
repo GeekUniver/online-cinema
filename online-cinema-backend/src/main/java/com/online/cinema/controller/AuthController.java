@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.online.cinema.exception_handlers.NotFoundException;
 import com.online.cinema.exception_handlers.OnlineCinemaError;
 import com.online.cinema.payload.request.LoginRequest;
 import com.online.cinema.payload.request.SignupRequest;
@@ -60,7 +61,15 @@ public class AuthController {
         UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
         String token = jwtUtils.generateJwtToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        User user = userService.findByLogin(userDetails.getUsername()).orElseThrow( () -> new NotFoundException("Username " + userDetails.getUsername() + " is not found"));
+
+        return ResponseEntity.ok(
+                new JwtResponse(
+                        token,
+                        user.getId(),
+                        user.getLogin(),
+                        user.getEmail(),
+                        user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toList())));
     }
 
     @PostMapping("/signup")

@@ -20,7 +20,7 @@ import io.jsonwebtoken.*;
 @Component
 @Slf4j
 public class JwtUtils {
-    @Value("${jwt.secret}")
+    @Value("${jwt.Secret}")
     private String jwtSecret;
 
 //    @Value("${jwt.ExpirationMs}")

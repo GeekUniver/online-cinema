@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {VideoMetadata} from "./video-metadata";
-import {Subject} from "rxjs";
 import {Genre} from "./Genre";
 import {AuthInterceptor} from "./ _helpers/auth.interceptor";
+import {TokenStorageService} from "./_services/token-storage.service";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,11 @@ import {AuthInterceptor} from "./ _helpers/auth.interceptor";
 export class DataService {
   public condition$ = new Subject<string>();
 
-  constructor(private http: HttpClient,  private authInterceptor: AuthInterceptor) {
+  constructor(private http: HttpClient,  private authInterceptor: AuthInterceptor, private tokenStorageService: TokenStorageService) {
+
   }
+
+
 
   public changeCount(condition: string) {
     this.condition$.next(condition);
@@ -24,6 +28,9 @@ export class DataService {
   }
 
   public findAllPreviews() {
+    //let header =  new HttpHeaders({ 'Authorization': 'Bearer ' + this.tokenStorageService.getToken()});
+
+   // return this.http.get<VideoMetadata[]>('/api/v1/video/all', {headers: header}).toPromise();
     return this.http.get<VideoMetadata[]>('/api/v1/video/all').toPromise()
   }
 

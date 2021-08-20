@@ -15,7 +15,7 @@ export class FilmInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(param => {
-      console.log(param)
+
       this.dataService.findById(param.id)
         .then((vmd) => {
           this.videoMetadata = vmd;
