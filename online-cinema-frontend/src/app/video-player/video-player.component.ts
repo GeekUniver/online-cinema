@@ -34,6 +34,8 @@ export class VideoPlayerComponent implements OnInit {
             }
           }
 
+          videoPlayer.height = screen.height * 0.6;
+
           videoPlayer.ontimeupdate = () => {
             sessionStorage.setItem("currentTime", videoPlayer.currentTime);
             sessionStorage.setItem("currentFilmId", String(this.videoMetadata.id))
