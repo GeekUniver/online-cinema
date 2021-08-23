@@ -20,10 +20,12 @@ export class FilmInfoComponent implements OnInit {
 //private tokenStorageService: TokenStorageService в конструкторе на 20.08 не было
 
   ngOnInit(): void {
-    //this.currentUser = this.tokenStorageService.getUser()
+
+    //console.log(this.tokenStorageService)
     //console.log(this.currentUser)
     //console.log(this.currentUser.username)
     this.route.params.subscribe(param => {
+      this.videoId = param.id;
       this.dataService.findById(param.id)
         .then((vmd) => {
           this.videoMetadata = vmd;
@@ -33,7 +35,8 @@ export class FilmInfoComponent implements OnInit {
           this.isError = true;
         });
     });
-    this.getCommentsByVideoId(this.videoId);
+    this.getCommentsByVideoId(this.videoId)
+    this.currentUser = this.tokenStorageService.getUser()
   }
 
   submit() {
