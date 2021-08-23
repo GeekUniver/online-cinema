@@ -6,6 +6,7 @@ import {Genre} from "./Genre";
 import {AuthInterceptor} from "./ _helpers/auth.interceptor";
 import {TokenStorageService} from "./_services/token-storage.service";
 import {Subject} from "rxjs";
+import {Country} from "../../Country";
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class DataService {
   }
 
   public uploadNewVideo(formData: FormData) {
-    return this.http.post('/api/v1/admin/upload', formData).toPromise()
+    return this.http.post('/api/v1/admin/upload', formData, ).toPromise()
   }
 
   findAllPreviewsWithCondition(condition: string) {
@@ -64,4 +65,7 @@ export class DataService {
      return this.http.get<CommentRepr[]>('/api/v1/video/comments/' + id).toPromise()
   }
 
+  findAllCountries() {
+    return this.http.get<Country[]>('/api/v1/admin/countries').toPromise();
+  }
 }

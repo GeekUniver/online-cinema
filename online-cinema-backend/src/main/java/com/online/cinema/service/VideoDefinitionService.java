@@ -1,8 +1,10 @@
 package com.online.cinema.service;
 
 import com.online.cinema.controller.repr.NewVideoRepr;
+import com.online.cinema.persist.Country;
 import com.online.cinema.persist.Genre;
 import com.online.cinema.persist.VideoMetadata;
+import com.online.cinema.repository.CountryRepository;
 import com.online.cinema.repository.GenreRepository;
 import com.online.cinema.repository.VideoMetadataRepository;
 import lombok.Data;
@@ -16,7 +18,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.WRITE;
@@ -31,6 +36,7 @@ public class VideoDefinitionService {
     private final VideoMetadataRepository videoMetadataRepository;
     private final FrameGrabberService frameGrabberService;
     private final GenreRepository genreRepository;
+    private final CountryRepository countryRepository;
 
 
     @Transactional
@@ -42,6 +48,8 @@ public class VideoDefinitionService {
         metadata.setDescription(newVideoRepr.getDescription());
         metadata.setYear_filmed(newVideoRepr.getYear_filmed());
         metadata.setName(newVideoRepr.getName());
+        metadata.setGenreList(genreRepository.findAllById(newVideoRepr.getGenreList().stream().map(Long::valueOf).collect(Collectors.toList())));
+        metadata.setCountryList(countryRepository.findAllById(newVideoRepr.getCountryList().stream().map(Long::valueOf).collect(Collectors.toList())));
         videoMetadataRepository.save(metadata);
 
         Path directory = Path.of(dataFolder, metadata.getId().toString());
@@ -62,5 +70,9 @@ public class VideoDefinitionService {
 
     public List<Genre> findAllGenre() {
         return genreRepository.findAll();
+    }
+
+    public List<Country> findAllCountries() {
+        return countryRepository.findAll();
     }
 }

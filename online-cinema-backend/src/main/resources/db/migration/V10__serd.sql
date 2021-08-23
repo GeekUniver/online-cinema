@@ -42,7 +42,7 @@ values
 
 insert into app_user_role (app_user_id, app_role_id)
 values
-(4, 2),
-(5, 2),
-(6, 2),
-(7, 1);
+(1, 2),
+(2, 2),
+(3, 2),
+(4, 1);

@@ -22,20 +22,29 @@
            placeholder="Enter the year of the film's release">
   </div>
 
-<!--  <div class="mb-3">-->
-<!--    <label for="genreList">Genre</label>-->
-<!--    <p><select type="text" class="form-control" name="genreList" id="genreList" aria-describedby="Video genre"-->
-<!--               placeholder="Enter description for video">-->
-<!--      <option>Выберите из списка</option>-->
-<!--      <option *ngFor="let genre of genres">{{genre.name}}</option>-->
-<!--    </select></p>-->
-<!--  </div>-->
+  <div>
+    <label>Genres</label>
+    <div *ngFor="let genre of genres; let i=index">
+        <input type="checkbox" [value]="genre.id" (change)="onGenreCheckboxChange($event)"/>
+        {{genre.name}}
+    </div>
+  </div>
+
+  <div>
+    <label>Countries</label>
+    <div *ngFor="let country of countries; let i=index">
+      <label>
+        <input type="checkbox" [value]="country.id" (change)="onCountryCheckboxChange($event)"/>
+        {{country.name}}
+      </label>
+    </div>
+  </div>
 
   <div class="mb-3">
     <label for="videoFile">Example file input</label>
     <input type="file" class="form-control" name="file" id="videoFile">
   </div>
-  <button class="btn btn-dark" (click)="submit()" type="button" >Submit</button>
+  <button class="btn btn-dark" (click)="submit()" type="button">Submit</button>
 </form>
 
 

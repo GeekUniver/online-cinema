@@ -23,11 +23,11 @@ public class NewVideoRepr {
 
     /*Список жанров фильма*/
 
-    private List<Genre> genreList;
+    private List<String> genreList;
 
     /*Страны производства фильма*/
 
-    private List<Country> countryList;
+    private List<String> countryList;
 
     /*Съемочная группа*/
     private List<CrewWithRole> crewWithRole;

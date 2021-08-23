@@ -1,6 +1,7 @@
 package com.online.cinema.controller;
 
 import com.online.cinema.controller.repr.NewVideoRepr;
+import com.online.cinema.persist.Country;
 import com.online.cinema.persist.Genre;
 import com.online.cinema.service.VideoDefinitionService;
 import lombok.Data;
@@ -22,15 +23,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class VideoDefinitionController {
-    private VideoDefinitionService videoDefinitionService;
+    private final VideoDefinitionService videoDefinitionService;
 
     @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> uploadVideo(NewVideoRepr newVideoRepr) {
-        log.info(newVideoRepr.getDescription());
-
         try {
             videoDefinitionService.saveNewVideo(newVideoRepr);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -38,7 +38,12 @@ public class VideoDefinitionController {
 
 
     @GetMapping("/genres")
-    public List<Genre> findAllGenre() {
+    public List<Genre> findAllGenres() {
         return videoDefinitionService.findAllGenre();
+    }
+
+    @GetMapping("/countries")
+    public List<Country> findAllCountries() {
+        return videoDefinitionService.findAllCountries();
     }
 }
