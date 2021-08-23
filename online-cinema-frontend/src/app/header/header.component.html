@@ -57,6 +57,6 @@
     <input type="text" [(ngModel)]="condition">
     <button (click)="setCondition()" routerLink="/">Search</button>
 
-    <a class="btn btn-outline-secondary" routerLink="/upload">Upload</a>
+    <a class="btn btn-outline-secondary" *ngIf="showAdminBoard||showModeratorBoard" routerLink="/upload">Upload</a>
   </div>
 </nav>
