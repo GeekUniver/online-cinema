@@ -1,71 +1,33 @@
-<!--<div class="container">-->
-<!--  <table class="table">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--      <th scope="col">Genres</th>-->
-<!--      <th scope="col">Countries</th>-->
-<!--      <th scope="col">Action</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr>-->
-<!--      <td>-->
-<!--        <div class="col-4" *ngFor="let genre of genres">-->
-<!--          <div>-->
-<!--            <p>{{genre.name}}</p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>-->
-<!--ghfghgh-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>dsfdf</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
-<!--</div>-->
+<div class="container">
+  <div>
+    <p>Genres</p>
+    <table class="table">
+      <thead>
+      </thead>
+      <tbody>
+      <tr *ngFor="let genre of genres">
+        <td>{{genre.id}}</td>
+        <td>{{genre.name}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <input type="text" [(ngModel)]="genre">
+    <button (click)="addGenre()" routerLink="/admin">Add</button>
+  </div>
 
-
-<div>
-  <p>Genres</p>
-  <table class="table">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Genre</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let genre of genres">
-      <td>{{genre.id}}</td>
-      <td>{{genre.name}}</td>
-    </tr>
-    </tbody>
-  </table>
-  <input type="text" [(ngModel)]="genre">
-  <button (click)="addGenre()" routerLink="/admin">Add</button>
-</div>
-
-<div>
-  <p>Countries</p>
-  <table class="table">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Country</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let country of countries">
-      <td>{{country.id}}</td>
-      <td>{{country.name}}</td>
-    </tr>
-    </tbody>
-  </table>
-  <input type="text" [(ngModel)]="country">
-  <button (click)="addCountry()" routerLink="/admin">Add</button>
+  <div>
+    <p>Countries</p>
+    <table class="table">
+      <thead>
+      </thead>
+      <tbody>
+      <tr *ngFor="let country of countries">
+        <td>{{country.id}}</td>
+        <td>{{country.name}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <input type="text" [(ngModel)]="country">
+    <button (click)="addCountry()" routerLink="/admin">Add</button>
+  </div>
 </div>

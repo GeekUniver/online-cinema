@@ -49,6 +49,7 @@ export class BoardAdminComponent implements OnInit {
       .catch(err => {
         this.isError = true;
       });
+    this.genre='';
   }
 
   addCountry() {
@@ -61,5 +62,6 @@ export class BoardAdminComponent implements OnInit {
       .catch(err => {
         this.isError = true;
       });
+    this.country='';
   }
 }
