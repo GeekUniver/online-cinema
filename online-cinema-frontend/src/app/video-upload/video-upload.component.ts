@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from "../data.service";
+import {Component, OnInit} from '@angular/core';
+import {DataService} from "../data.service";
 import {Router} from "@angular/router";
 import {Genre} from "../Genre";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthInterceptor} from "../ _helpers/auth.interceptor";
 import {Country} from "../../../Country";
 
 @Component({
@@ -15,16 +14,17 @@ export class VideoUploadComponent implements OnInit {
 
   isError: boolean = false;
   genres: Genre[] = [];
-  currentGenres: Genre[] = [];
+  currentGenres: Array<Number> = [];
   countries: Country[] = [];
-  currentCountries: Country[] = [];
+  currentCountries: Array<Number> = [];
 
   form: FormGroup;
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
     this.form = this.fb.group({
-      checkArray: this.fb.array([], [Validators.required])
+      checkCountryArray: this.fb.array([], [Validators.required])
     })
+
   }
 
   ngOnInit(): void {
@@ -49,14 +49,17 @@ export class VideoUploadComponent implements OnInit {
 
   submit() {
     console.log("Submit button")
-    let form:HTMLFormElement | null = document.forms.namedItem('uploadForm');
+    let form: HTMLFormElement | null = document.forms.namedItem('uploadForm');
     if (form) {
       let fd = new FormData(form);
 
+      console.log(JSON.stringify(this.currentGenres))
+      console.log(this.currentGenres.toString())
+
       fd.append(
-        'genreList', JSON.stringify(this.currentGenres));
-      // fd.append(
-      //   'countryList', JSON.stringify(this.currentCountries));
+        'genreList', (this.currentGenres.toString()));
+      fd.append(
+        'countryList', (this.currentCountries.toString()));
 
       this.dataService.uploadNewVideo(fd)
         .then(() => {
@@ -70,26 +73,28 @@ export class VideoUploadComponent implements OnInit {
     }
   }
 
-  onGenreCheckboxChange(e: any) {
-    const checkArray: FormArray = this.form.get('checkArray') as FormArray;
+  onCheckboxChange(e: any) {
+    const index = e.target.value;
+
     if (e.target.checked) {
-      checkArray.push(new FormControl(e.target.value));
+      if (index <= this.genres.length) {
+        this.currentGenres.push(index);
+      } else {
+        this.currentCountries.push((+index - this.genres.length));
+      }
     } else {
-      const index = checkArray.controls.findIndex(x => x.value === e.target.value);
-      checkArray.removeAt(index);
+      if (index <= this.genres.length) {
+        this.remove(this.currentGenres, index);
+      } else {
+        this.remove(this.currentCountries, index);
+      }
     }
-    this.currentGenres = this.form.value;
   }
 
-  onCountryCheckboxChange(e: any) {
-    const checkArray: FormArray = this.form.get('checkArray') as FormArray;
-
-    if (e.target.checked) {
-      checkArray.push(new FormControl(e.target.value));
-    } else {
-      const index = checkArray.controls.findIndex(x => x.value === e.target.value);
-      checkArray.removeAt(index);
+  remove(arr: Array<Number>, key: number) {
+    const index = arr.indexOf(key, 0);
+    if (index > -1) {
+      arr.splice(index, 1);
     }
-    this.currentCountries = this.form.value;
   }
 }

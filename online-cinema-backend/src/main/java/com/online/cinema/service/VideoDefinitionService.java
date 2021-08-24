@@ -75,4 +75,12 @@ public class VideoDefinitionService {
     public List<Country> findAllCountries() {
         return countryRepository.findAll();
     }
+
+    public void saveNewGenre(Genre genre) {
+        genreRepository.save(genre);
+    }
+
+    public void saveNewCountry(Country country) {
+        countryRepository.save(country);
+    }
 }

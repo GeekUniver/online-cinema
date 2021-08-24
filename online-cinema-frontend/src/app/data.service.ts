@@ -37,7 +37,7 @@ export class DataService {
   }
 
   public uploadNewVideo(formData: FormData) {
-    return this.http.post('/api/v1/admin/upload', formData, ).toPromise()
+    return this.http.post('/api/v1/admin/upload', formData).toPromise()
   }
 
   findAllPreviewsWithCondition(condition: string) {
@@ -67,5 +67,13 @@ export class DataService {
 
   findAllCountries() {
     return this.http.get<Country[]>('/api/v1/admin/countries').toPromise();
+  }
+
+  addNewGenre(genre: Genre) {
+    return this.http.post('/api/v1/admin/genres', genre).toPromise();
+  }
+
+  addNewCountry(country: Country) {
+    return this.http.post('/api/v1/admin/countries', country).toPromise();
   }
 }

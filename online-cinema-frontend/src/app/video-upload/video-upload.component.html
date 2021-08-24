@@ -25,7 +25,7 @@
   <div>
     <label>Genres</label>
     <div *ngFor="let genre of genres; let i=index">
-        <input type="checkbox" [value]="genre.id" (change)="onGenreCheckboxChange($event)"/>
+        <input type="checkbox" [value]="genre.id" (change)="onCheckboxChange($event)"/>
         {{genre.name}}
     </div>
   </div>
@@ -34,7 +34,7 @@
     <label>Countries</label>
     <div *ngFor="let country of countries; let i=index">
       <label>
-        <input type="checkbox" [value]="country.id" (change)="onCountryCheckboxChange($event)"/>
+        <input type="checkbox" [value]="country.id + genres.length" (change)="onCheckboxChange($event)"/>
         {{country.name}}
       </label>
     </div>

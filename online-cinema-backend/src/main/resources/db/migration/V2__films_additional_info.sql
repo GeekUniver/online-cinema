@@ -14,7 +14,7 @@ CREATE TABLE crew_classifier(
      first_name varchar(255) not null,
      last_name varchar(255) null,
      patronymic varchar(255) null,
-     birthday timestamp with time zone null);
+     birthday timestamp with time zone null
 );
 
 
