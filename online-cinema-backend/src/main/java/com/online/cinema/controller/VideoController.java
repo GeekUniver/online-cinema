@@ -96,6 +96,17 @@ public class VideoController {
         return builder.body(streamBytesInfo.getResponseBody());
     }
 
+    @PostMapping(path = "/addNewComment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> addNewComment(CommentRepr newComment) {
+        if (newComment.getAppUserId() == null) return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+        try {
+            commentService.save(newComment);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @GetMapping("/comments")
     public List<CommentRepr> findAllComments() {
         return commentService.findAllComments();
@@ -105,5 +116,7 @@ public class VideoController {
     public List<CommentRepr> findCommentsByVideoId(@PathVariable("id") Long id) {
         return commentService.findCommentsByVideoId(id);
     }
+
+
 }
 
