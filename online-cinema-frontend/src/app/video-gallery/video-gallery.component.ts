@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { DataService } from "../data.service";
 import {VideoMetadata} from "../video-metadata";
-import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-video-gallery',
@@ -15,7 +14,7 @@ export class VideoGalleryComponent implements OnInit {
   isError: boolean = false;
   content!: string;
 
-  constructor(public dataService: DataService, private userService: UserService) {}  // добавлен private userService: UserService
+  constructor(public dataService: DataService) {}
 
   ngOnInit(): void {
     this.dataService.condition$.subscribe((condition) => this.setCondition(condition));

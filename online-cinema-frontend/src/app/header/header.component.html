@@ -9,16 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent"  href="#" role="banner">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-
-<!--          <button (click)="setCondition()" routerLink="/">Random Movie</button>-->
-
-<!--          <input type="submit" class="btn btn-primary black-background white" value="Random Movie" />-->
-
-<!--          <div class="navbar-header">-->
-<!--          <button class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" value="Random Movie"></button>-->
-<!--          <i class="fa fa-bars"></i>-->
-<!--          </div>-->
-          <button type="button" class="btn btn-default navbar navbar-expand-lg navbar-dark bg-dark white">Random Movie</button>
+          <button  type="button" class="btn btn-default navbar navbar-expand-lg navbar-dark bg-dark white" [routerLink]="['/info/', id]"  >Random Movie</button>
         </li>
       </ul>
     </div>

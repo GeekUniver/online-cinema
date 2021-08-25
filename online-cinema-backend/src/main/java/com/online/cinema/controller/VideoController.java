@@ -37,12 +37,7 @@ public class VideoController {
     private final CommentService commentService;
 
     @GetMapping("/all")
-    public List<VideoMetadataRepr> findAllVideoMetadata(Principal principal) {
-//        if (principal == null) {
-//            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<principal:null>>>>>>>>>>>>>>>>>>>>>>>>>");
-//        } else {
-//            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<principal:" + principal.getName() + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-//        }
+    public List<VideoMetadataRepr> findAllVideoMetadata() {
         return videoService.findAllVideoMetadata();
     }
 
@@ -58,8 +53,7 @@ public class VideoController {
 
     @GetMapping("/random")
     public VideoMetadataRepr findVideoMetadataByRandomId() throws Throwable {
-        long randomId = (int) (Math.random() * (videoService.countFindAllVideoMetadata()));
-        return videoService.findById(randomId).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + randomId));
+        return videoService.findById(videoService.findRandomId()).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + videoService.findRandomId()));
     }
 
     @GetMapping(value = "/preview/{id}", produces = MediaType.IMAGE_JPEG_VALUE)

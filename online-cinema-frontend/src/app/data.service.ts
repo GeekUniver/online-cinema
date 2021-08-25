@@ -18,8 +18,6 @@ export class DataService {
 
   }
 
-
-
   public changeCount(condition: string) {
     this.condition$.next(condition);
     console.log("data condition = " + this.condition$);
@@ -76,4 +74,9 @@ export class DataService {
   addNewCountry(country: Country) {
     return this.http.post('/api/v1/admin/countries', country).toPromise();
   }
+
+  public findByRandomId () {
+    return this.http.get<VideoMetadata>('/api/v1/video/random' ).toPromise()
+  }
+
 }

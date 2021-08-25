@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import {NgModule, Provider} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,12 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { AuthInterceptor } from "./ _helpers/auth.interceptor";
+
+const INTERCEPTOR_PROVIDER: Provider = {
+  provide:HTTP_INTERCEPTORS,
+  useClass:AuthInterceptor,
+  multi: true
+}
 
 @NgModule({
   declarations: [
@@ -45,8 +51,14 @@ import { AuthInterceptor } from "./ _helpers/auth.interceptor";
         ReactiveFormsModule
     ],
   providers: [
-    AuthInterceptor,
-    {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}],
+  AuthInterceptor,
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+

@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -48,10 +49,18 @@ public class VideoService {
                 .collect(Collectors.toList());
     }
 
-    public long countFindAllVideoMetadata() {
-        return videoMetadataRepository.findAll().size();
-    }
+    public Long findRandomId() {
+        List<VideoMetadataRepr> list = videoMetadataRepository
+                .findAll().stream()
+                .map(VideoService::convert)
+                .collect(Collectors.toList());
 
+        List<Long> listId =  list.stream()
+                .map(VideoMetadataRepr::getId)
+                .collect(Collectors.toList());
+
+        return listId.get(new Random().nextInt(listId.size()));
+    }
 
     public Optional<VideoMetadataRepr> findById(Long id) {
         return videoMetadataRepository.findById(id)
