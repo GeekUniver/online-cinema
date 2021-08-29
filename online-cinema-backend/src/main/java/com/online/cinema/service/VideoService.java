@@ -1,7 +1,5 @@
 package com.online.cinema.service;
 
-import com.online.cinema.persist.CrewWithRole;
-import com.online.cinema.persist.Genre;
 import com.online.cinema.repository.GenreRepository;
 import com.online.cinema.repository.VideoMetadataRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,25 +7,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.online.cinema.persist.VideoMetadata;
 
 import com.online.cinema.controller.repr.VideoMetadataRepr;
-import com.online.cinema.controller.repr.NewVideoRepr;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static com.online.cinema.utils.Utils.removeFileExt;
 
 @Slf4j

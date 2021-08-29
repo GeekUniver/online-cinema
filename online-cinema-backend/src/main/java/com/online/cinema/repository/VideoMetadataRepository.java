@@ -14,7 +14,7 @@ public interface VideoMetadataRepository extends JpaRepository<VideoMetadata, Lo
     @Query(
             value = "SELECT * FROM video_metadata where year_filmed = ?1",
             nativeQuery = true)
-    public List<VideoMetadata> findVideoMetadataByYear(Integer status);
+    List<VideoMetadata> findVideoMetadataByYear(Integer status);
 
 
     @Query(
@@ -26,10 +26,10 @@ public interface VideoMetadataRepository extends JpaRepository<VideoMetadata, Lo
                     "or crew_classifier.first_name = :lastName and crew_classifier.last_name = :firstName) " +
                     "and (crew_classifier.patronymic = :patronymic or crew_classifier.patronymic is null)",
             nativeQuery = true)
-    public List<VideoMetadata> findVideoMetadataByCrewFirstLastPatronymic(
-                @Param("firstName") String firstName,
-                @Param("lastName") String lastName,
-                @Param("patronymic") String patronymic);
+    List<VideoMetadata> findVideoMetadataByCrewFirstLastPatronymic(
+            @Param("firstName") String firstName,
+            @Param("lastName") String lastName,
+            @Param("patronymic") String patronymic);
 
     @Query(
             value = "select video_metadata.* " +
@@ -40,8 +40,7 @@ public interface VideoMetadataRepository extends JpaRepository<VideoMetadata, Lo
                     "or crew_classifier.last_name like concat('%',:justName,'%') " +
                     "or crew_classifier.patronymic like concat('%',:justName,'%')",
             nativeQuery = true)
-
-    public List<VideoMetadata> findVideoMetadataByCrewFirstOrLastOrPatronymic(
+    List<VideoMetadata> findVideoMetadataByCrewFirstOrLastOrPatronymic(
             @Param("justName") String justName);
 
 
@@ -51,7 +50,7 @@ public interface VideoMetadataRepository extends JpaRepository<VideoMetadata, Lo
                     "join country_classifier on country_classifier.id = video_metadata_country.country_classifier_id " +
                     "where country_classifier.name = ?1",
             nativeQuery = true)
-    public List<VideoMetadata> findVideoMetadataByCountry(String country);
+    List<VideoMetadata> findVideoMetadataByCountry(String country);
 
 
     @Query(
@@ -60,12 +59,12 @@ public interface VideoMetadataRepository extends JpaRepository<VideoMetadata, Lo
                     "join genre_classifier on genre_classifier.id = video_metadata_genre.genre_classifier_id " +
                     "where genre_classifier.name = ?1",
             nativeQuery = true)
-    public List<VideoMetadata> findVideoMetadataByGenre(String genre);
+    List<VideoMetadata> findVideoMetadataByGenre(String genre);
 
 
-    public List<VideoMetadata> findAllByName(String name);
+    List<VideoMetadata> findAllByName(String name);
 
-    public List<VideoMetadata> findAllByNameContaining(String name);
+    List<VideoMetadata> findAllByNameContaining(String name);
 
-    public List<VideoMetadata> findAllByDescriptionContaining(String description);
+    List<VideoMetadata> findAllByDescriptionContaining(String description);
 }
