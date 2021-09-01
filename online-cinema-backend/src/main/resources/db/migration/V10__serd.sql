@@ -33,19 +33,16 @@ INSERT INTO VIDEO_METADATA (
     163282682
     );
 
-insert into app_role (name)
-values
-('ROLE_USER'),
-('ROLE_ADMIN');
-
 insert into app_user (login, password, email)
 values
 ('bob', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'bob_johnson@gmail.com'),
 ('john', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'john_johnson@gmail.com'),
-('Johny', '$2a$12$o3dvKAd7EhxzJaLWwPdTuuh3//C8EYyXo5X7UEDCKw9by6l1gBXQu', 'johny_johnsony@gmail.com');
+('Johny', '$2a$12$o3dvKAd7EhxzJaLWwPdTuuh3//C8EYyXo5X7UEDCKw9by6l1gBXQu', 'johny_johnsony@gmail.com'),
+('Roma', '$2a$10$TgQQa/l34ABaxithmHBsou8vvgDeNRHeulubOL5Pwfoyo4L78IsPO', 'roma@roma.ru');
 
 insert into app_user_role (app_user_id, app_role_id)
 values
-(1, 1),
+(1, 2),
 (2, 2),
-(3, 2);
+(3, 2),
+(4, 1);

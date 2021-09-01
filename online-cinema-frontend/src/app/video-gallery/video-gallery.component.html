@@ -6,7 +6,7 @@
         Лучшие фильмы в лучшем качестве.
       </p>
       <p>
-        <a class="btn btn-primary btn-lg" href="https://yandex.ru/referats/" role="button">Топ 100 фильмов</a>
+        <a class="btn btn-primary btn-lg" href="https://www.kinopoisk.ru/lists/top250/?tab=all" role="button">Топ 250 фильмов</a>
       </p>
     </div>
   </div>
@@ -19,11 +19,13 @@
   </div>
 
   <div class="col-4" *ngFor="let preview of previews">
-    <a routerLink="/info/{{preview.id}}">
-      <img src="{{preview.previewUrl}}" alt="..." class="card-img-top">
-    </a>
-    <div class="card-body">
-      <p class="card-text">{{preview.name}}</p>
+    <div class="card mb-3">
+      <a routerLink="/info/{{preview.id}}">
+        <img src="{{preview.previewUrl}}" alt="..." class="card-img-top">
+      </a>
+      <div class="card-body">
+        <p class="card-text">{{preview.name}}</p>
+      </div>
     </div>
   </div>
 </div>

@@ -1,5 +1,33 @@
 <div class="container">
-  <header class="jumbotron">
-    <p>{{ content }}</p>
-  </header>
+  <div>
+    <p>Genres</p>
+    <table class="table">
+      <thead>
+      </thead>
+      <tbody>
+      <tr *ngFor="let genre of genres">
+        <td>{{genre.id}}</td>
+        <td>{{genre.name}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <input type="text" [(ngModel)]="genre">
+    <button (click)="addGenre()" routerLink="/admin">Add</button>
+  </div>
+
+  <div>
+    <p>Countries</p>
+    <table class="table">
+      <thead>
+      </thead>
+      <tbody>
+      <tr *ngFor="let country of countries">
+        <td>{{country.id}}</td>
+        <td>{{country.name}}</td>
+      </tr>
+      </tbody>
+    </table>
+    <input type="text" [(ngModel)]="country">
+    <button (click)="addCountry()" routerLink="/admin">Add</button>
+  </div>
 </div>

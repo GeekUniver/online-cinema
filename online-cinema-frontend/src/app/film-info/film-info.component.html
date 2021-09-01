@@ -6,11 +6,10 @@
         Лучшие фильмы в лучшем качестве.
       </p>
       <p>
-        <a class="btn btn-primary btn-lg" href="https://yandex.ru/referats/" role="button">Топ 100 фильмов</a>
+        <a class="btn btn-primary btn-lg" href="https://www.kinopoisk.ru/lists/top250/?tab=all" role="button">Топ 250 фильмов</a>
       </p>
     </div>
   </div>
-
 </main>
 
 <div class="row g-3">
@@ -19,19 +18,118 @@
     Can't load the video gallery
   </div>
 
-<div class="container">
-  <div class="row align-items-start">
-    <div class="col">
+<div class="container mt-3">
+
+  <div class="row">
+    <div class="col-sm-4">
       <a routerLink="/player/{{videoMetadata.id}}">
         <img src="{{videoMetadata.previewUrl}}" alt="..." class="card-img-top">
       </a>
-      <div class="card-body">
-        <p class="card-text">{{videoMetadata.name}}</p>
-      </div>
     </div>
-    <div class="col">
+
+    <div class="col-sm-8">
+      <h2 class="card-text">{{videoMetadata.name}}</h2>
       <p class="card-text">{{videoMetadata.description}}</p>
+
+      <table cellspacing="20" cellpadding="5">
+        <tr>
+          <td>
+            <p>Год выхода</p>
+          </td>
+          <td>
+            <div class="horizontal">
+                <p>{{videoMetadata.year_filmed}}</p>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <p>Страна</p>
+          </td>
+          <td>
+            <div class="horizontal">
+              <div *ngFor="let country of videoMetadata.countryList">
+                <p>{{country.name}}&nbsp;</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <p>Жанр</p>
+          </td>
+          <td>
+            <div class="horizontal">
+              <div *ngFor="let genre of videoMetadata.genreList">
+                <p>{{genre.name}}&nbsp;</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
     </div>
   </div>
+
+
+  <div class="comments">
+    <h4 class="title-comments">Комментарии к фильму</h4>
+    <div class="media-list" *ngFor="let comment of comments">
+      <div class="media">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object img-rounded" src="https://pp.userapi.com/-ZL783eHSiya6rWkNsdZwWYrLdSOb9zWn5EaUg/ISgbr46L9bo.jpg" alt="">
+            <!-- https://d1fj5empgslmyx.cloudfront.net/uploads/user/34428/thumb_avatar_1608032548.jpg --> <!--75x75-->
+          </a>
+        </div>
+        <div class="media-body">
+          <div class="media-heading">
+            <div class="author">{{comment.appUserLogin}}</div>
+            <div class="metadata">
+              <span class="date">{{comment.data}}</span>
+            </div>
+          </div>
+          <div class="media-text text-justify">{{comment.comment}}</div>
+        </div>
+      </div>
+    </div>
+    <form id="commentForm" name="commentForm" *ngIf="currentUser">
+      <div>
+        <input type="text" class="form-control" name="comment" id="comment" placeholder="Оставь свой комментарий">
+        <input type="number" type="hidden" class="form-control" name="videoMetadataId" id="videoMetadataId" value="{{videoMetadata.id}}">
+        <input type="number" type="hidden" class="form-control" name="appUserId" id="appUserId" value="{{currentUser.id}}">
+        <input type="number" type="hidden" class="form-control" name="appUserLogin" id="appUserLogin"  value="{{currentUser.username}}">
+      </div>
+      <button class="btn btn-dark" (click)="submit()" type="button" type="reset">Отправить</button>
+    </form>
+    <!-- рейтинг-->
+    <h5 class="title-comments">Оцените видео</h5>
+    <!--c покрытием, но без текущего введеного значения
+    <div class="rating-area" (click)="setRate(rating)" id="ratingForm">
+      <input type="radio" id="star-5" name="rating" value="5" [(ngModel)] = "rating">
+      <label for="star-5" title="Оценка «5»"></label>
+      <input type="radio" id="star-4" name="rating" value="4" [(ngModel)] = "rating">
+      <label for="star-4" title="Оценка «4»"></label>
+      <input type="radio" id="star-3" name="rating" value="3" [(ngModel)] = "rating">
+      <label for="star-3" title="Оценка «3»"></label>
+      <input type="radio" id="star-2" name="rating" value="2" [(ngModel)] = "rating">
+      <label for="star-2" title="Оценка «2»"></label>
+      <input type="radio" id="star-1" name="rating" value="1" [(ngModel)] = "rating">
+      <label for="star-1" title="Оценка «1»"></label>
+    </div>-->
+
+    <!--без покрытие, текущий ввод-->
+    <span class="rating-area"
+          *ngFor="let value of values"
+          (click)="setRate(value)">
+      <input type="radio" id="{{value}}" name="rating" value="{{value}}" >
+      <label for="{{value}}"></label>
+    </span>
+
 </div>
 </div>

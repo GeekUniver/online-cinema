@@ -1,6 +1,9 @@
 package com.online.cinema.controller;
 
+import com.online.cinema.controller.repr.CommentRepr;
 import com.online.cinema.exception_handlers.NotFoundException;
+import com.online.cinema.persist.Genre;
+import com.online.cinema.service.CommentService;
 import com.online.cinema.service.FindVideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,7 @@ import com.online.cinema.service.VideoService;
 import com.online.cinema.controller.repr.NewVideoRepr;
 
 import java.io.InputStream;
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Supplier;
@@ -30,6 +34,7 @@ public class VideoController {
 
     private final VideoService videoService;
     private final FindVideoService findVideoService;
+    private final CommentService commentService;
 
     @GetMapping("/all")
     public List<VideoMetadataRepr> findAllVideoMetadata() {
@@ -44,6 +49,11 @@ public class VideoController {
     @GetMapping("/{id}")
     public VideoMetadataRepr findVideoMetadataById(@PathVariable("id") Long id) throws Throwable {
         return videoService.findById(id).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + id));
+    }
+
+    @GetMapping("/random")
+    public VideoMetadataRepr findVideoMetadataByRandomId() throws Throwable {
+        return videoService.findById(videoService.findRandomId()).orElseThrow((Supplier<Throwable>) () -> new NotFoundException("There is no movie with id=" + videoService.findRandomId()));
     }
 
     @GetMapping(value = "/preview/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
@@ -80,16 +90,27 @@ public class VideoController {
         return builder.body(streamBytesInfo.getResponseBody());
     }
 
-    @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> uploadVideo(NewVideoRepr newVideoRepr) {
-        log.info(newVideoRepr.getDescription());
-
+    @PostMapping(path = "/addNewComment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> addNewComment(CommentRepr newComment) {
+        if (newComment.getAppUserId() == null) return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
         try {
-            videoService.saveNewVideo(newVideoRepr);
+            commentService.save(newComment);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/comments")
+    public List<CommentRepr> findAllComments() {
+        return commentService.findAllComments();
+    }
+
+    @GetMapping("/comments/{id}")
+    public List<CommentRepr> findCommentsByVideoId(@PathVariable("id") Long id) {
+        return commentService.findCommentsByVideoId(id);
+    }
+
+
 }
 

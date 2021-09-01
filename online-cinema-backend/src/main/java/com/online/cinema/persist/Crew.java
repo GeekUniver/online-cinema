@@ -28,5 +28,4 @@ public class Crew{
 
     @Column(name = "birthday")
     private OffsetDateTime birthday;
-
 }

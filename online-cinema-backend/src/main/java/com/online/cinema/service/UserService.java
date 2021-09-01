@@ -29,17 +29,22 @@ public class UserService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public Optional<User> findByLogin(String login){
+    public Optional<User> findByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
 
-    public User findByEmail(String email){
+    public User findByEmail(String email) {
         //todo UserEmailNotFoundException после того, как Рома разберётся с исключениями
         //todo либо заменить на Optional
-        return userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("Пользователь не найден" + email));
+        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Пользователь не найден" + email));
+    }
+
+    public User findById(Long id) {
+        User user = userRepository.findById(id).get();
+        return user;
     }
 }
