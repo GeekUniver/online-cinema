@@ -3,7 +3,7 @@ CREATE TABLE video_metadata(
                                file_name varchar(255) not null,
                                content_type varchar(20) not null,
                                description varchar(10240),
-                               file_size bigint not null,
+                               file_size bigint null,
                                video_length bigint null
 );
 
@@ -42,13 +42,13 @@ CREATE TABLE app_user_role(
   Признак удаления нужен для сохранения иерархической структуры комментов, при удалении коммента из середины ветки
  */
 CREATE TABLE video_comment(
-                              id bigserial primary key,
-                              app_user_id bigint not null references app_user(id),
-                              video_metadata_id bigint not null references video_metadata(id),
-                              user_comment_id bigint null references video_comment(id),
-                              comment varchar(10240) not null,
-                              dt timestamp with time zone not null default current_timestamp,
-    deleted smallint default 0 not null
+                        id bigserial primary key,
+                        app_user_id bigint not null references app_user(id),
+                        video_metadata_id bigint not null references video_metadata(id),
+                        user_comment_id bigint null references video_comment(id),
+                        comment varchar(10240) not null,
+                        dt timestamp with time zone not null default current_timestamp,
+                        deleted smallint default 0 null
 );
 
 /*Оценки пользователей к видео

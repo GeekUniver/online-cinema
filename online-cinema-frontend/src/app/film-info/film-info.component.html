@@ -2,7 +2,7 @@
   <div class="jumbotron">
     <div class="container">
       <h1 class="display-3">Онлайн кинотеатр</h1>
-      <p>
+      <p style="color: #eeeeee">
         Лучшие фильмы в лучшем качестве.
       </p>
       <p>
@@ -28,29 +28,29 @@
     </div>
 
     <div class="col-sm-8">
-      <h2 class="card-text">{{videoMetadata.name}}</h2>
-      <p class="card-text">{{videoMetadata.description}}</p>
+      <h2 class="card-text" style="color: #eeeeee">{{videoMetadata.name}}</h2>
+      <p class="card-text" style="color: #eeeeee">{{videoMetadata.description}}</p>
 
       <table cellspacing="20" cellpadding="5">
         <tr>
           <td>
-            <p>Год выхода</p>
+            <p style="color: #eeeeee">Год выхода</p>
           </td>
           <td>
             <div class="horizontal">
-                <p>{{videoMetadata.year_filmed}}</p>
+                <p style="color: #eeeeee">{{videoMetadata.year_filmed}}</p>
             </div>
           </td>
         </tr>
 
         <tr>
           <td>
-            <p>Страна</p>
+            <p style="color: #eeeeee">Страна</p>
           </td>
           <td>
             <div class="horizontal">
               <div *ngFor="let country of videoMetadata.countryList">
-                <p>{{country.name}}&nbsp;</p>
+                <p style="color: #eeeeee">{{country.name}}&nbsp;</p>
               </div>
             </div>
           </td>
@@ -58,12 +58,12 @@
 
         <tr>
           <td>
-            <p>Жанр</p>
+            <p style="color: #eeeeee">Жанр</p>
           </td>
           <td>
             <div class="horizontal">
               <div *ngFor="let genre of videoMetadata.genreList">
-                <p>{{genre.name}}&nbsp;</p>
+                <p style="color: #eeeeee">{{genre.name}}&nbsp;</p>
               </div>
             </div>
           </td>

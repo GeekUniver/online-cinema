@@ -1,33 +1,33 @@
 <div class="container">
   <div>
-    <p>Genres</p>
+    <p style="color: #eeeeee">Жанры</p>
     <table class="table">
       <thead>
       </thead>
       <tbody>
-      <tr *ngFor="let genre of genres">
+      <tr *ngFor="let genre of genres" style="color: #eeeeee">
         <td>{{genre.id}}</td>
         <td>{{genre.name}}</td>
       </tr>
       </tbody>
     </table>
     <input type="text" [(ngModel)]="genre">
-    <button (click)="addGenre()" routerLink="/admin">Add</button>
+    <button (click)="addGenre()" routerLink="/admin">Добавить</button>
   </div>
 
   <div>
-    <p>Countries</p>
+    <p style="color: #eeeeee">Страны</p>
     <table class="table">
       <thead>
       </thead>
       <tbody>
-      <tr *ngFor="let country of countries">
+      <tr *ngFor="let country of countries" style="color: #eeeeee">
         <td>{{country.id}}</td>
         <td>{{country.name}}</td>
       </tr>
       </tbody>
     </table>
     <input type="text" [(ngModel)]="country">
-    <button (click)="addCountry()" routerLink="/admin">Add</button>
+    <button (click)="addCountry()" routerLink="/admin">Добавить</button>
   </div>
 </div>
