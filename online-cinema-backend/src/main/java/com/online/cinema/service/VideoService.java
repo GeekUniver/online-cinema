@@ -1,32 +1,26 @@
 package com.online.cinema.service;
 
+import com.online.cinema.repository.GenreRepository;
 import com.online.cinema.repository.VideoMetadataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpRange;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.online.cinema.persist.VideoMetadata;
 
 import com.online.cinema.controller.repr.VideoMetadataRepr;
-import com.online.cinema.controller.repr.NewVideoRepr;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.WRITE;
-import static com.online.cinema.Utils.removeFileExt;
+import static com.online.cinema.utils.Utils.removeFileExt;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -37,6 +31,7 @@ public class VideoService {
     private String dataFolder;
 
     private final VideoMetadataRepository videoMetadataRepository;
+    private final GenreRepository genreRepository;
 
     private final FrameGrabberService frameGrabberService;
 
@@ -46,6 +41,18 @@ public class VideoService {
                 .collect(Collectors.toList());
     }
 
+    public Long findRandomId() {
+        List<VideoMetadataRepr> list = videoMetadataRepository
+                .findAll().stream()
+                .map(VideoService::convert)
+                .collect(Collectors.toList());
+
+        List<Long> listId =  list.stream()
+                .map(VideoMetadataRepr::getId)
+                .collect(Collectors.toList());
+
+        return listId.get(new Random().nextInt(listId.size()));
+    }
 
     public Optional<VideoMetadataRepr> findById(Long id) {
         return videoMetadataRepository.findById(id)
@@ -53,14 +60,10 @@ public class VideoService {
     }
 
     public static VideoMetadataRepr convert(VideoMetadata vmd) {
-        VideoMetadataRepr repr = new VideoMetadataRepr();
-        repr.setId(vmd.getId());
+        vmd.getCrewWithRole().stream().forEach(crewWithRole -> crewWithRole.setVideoMetadata(null));
+        VideoMetadataRepr repr = new VideoMetadataRepr(vmd);
         repr.setPreviewUrl("/api/v1/video/preview/" + vmd.getId());
         repr.setStreamUrl("/api/v1/video/stream/" + vmd.getId());
-        repr.setDescription(vmd.getDescription());
-        repr.setContentType(vmd.getContentType());
-        repr.setName(vmd.getName());
-        repr.setYear_filmed(vmd.getYear_filmed());
         return repr;
     }
 
@@ -80,31 +83,6 @@ public class VideoService {
                         return Optional.empty();
                     }
                 });
-    }
-
-    @Transactional
-    public void saveNewVideo(NewVideoRepr newVideoRepr) {
-        VideoMetadata metadata = new VideoMetadata();
-        metadata.setFileName(newVideoRepr.getFile().getOriginalFilename());
-        metadata.setContentType(newVideoRepr.getFile().getContentType());
-        metadata.setFileSize(newVideoRepr.getFile().getSize());
-        metadata.setDescription(newVideoRepr.getDescription());
-        videoMetadataRepository.save(metadata);
-
-        Path directory = Path.of(dataFolder, metadata.getId().toString());
-        try {
-            Files.createDirectory(directory);
-            Path file = Path.of(directory.toString(), newVideoRepr.getFile().getOriginalFilename());
-            try (OutputStream output = Files.newOutputStream(file, CREATE, WRITE)) {
-                newVideoRepr.getFile().getInputStream().transferTo(output);
-            }
-            long videoLength = frameGrabberService.generatePreviewPictures(file);
-            metadata.setVideoLength(videoLength);
-            videoMetadataRepository.save(metadata);
-        } catch (IOException ex) {
-            log.error("", ex);
-            throw new IllegalStateException(ex);
-        }
     }
 
     public Optional<StreamBytesInfo> getStreamBytes(Long id, HttpRange range) {

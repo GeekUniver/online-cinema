@@ -30,13 +30,15 @@ How to work with a local profile?
 
 Create a new profile with the name "local" according to this instruction [](https://www.jetbrains.com/help/idea/customizing-profiles.html)
 
-Go to Run -> Profile -> Edit Configurations -> Active Profiles -> "local"
+Go to Run -> Profile -> Edit Configurations -> Active Profiles -> "local" 
+OR
+need to add "-Dspring.profiles.active=local" into VM options
 
 ---
 
 How to work with directory.properties?
 
-directory.properties 
+directory.properties (from resources) should have one string "data.folder=c://Java" (for example)
 
     
 

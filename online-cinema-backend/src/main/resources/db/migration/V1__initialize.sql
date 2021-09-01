@@ -3,7 +3,7 @@ CREATE TABLE video_metadata(
                                file_name varchar(255) not null,
                                content_type varchar(20) not null,
                                description varchar(10240),
-                               file_size bigint not null,
+                               file_size bigint null,
                                video_length bigint null
 );
 
@@ -16,10 +16,6 @@ CREATE TABLE app_user(
                          password varchar(60) not null
 );
 
-INSERT INTO app_user(email, login, password) VALUES
-            ('u@u', 'user', '$2y$12$gRaobCsBpzWbJG.4PLIxG.MY5y7mGY6a6oZjVahDGChjKpLoUA/cK'),
-            ('u1@u1', 'user1', '$2a$12$VRzM4mdk0I6mxrRWv2eojOi.EHh1SCl703dCx5Fqa2Sk6yjI8XT8O'),
-            ('a@a', 'admin', '$2a$12$kDMxlytrBLsVXBAjS1vPOOKc0b6lu38y6a03gFUqS8JebDQmmAtbC');  /*$2y$12$a43MrZhiHGJrPb0XgNjkBeOtzFfVpeONilQxDMzq5hFteekOiM9dy*/
 
 /*Пользователи системы. Префикс app нужен для совместимости с СУБД, где role зарезервировал*/
 CREATE TABLE app_role(
@@ -28,8 +24,8 @@ CREATE TABLE app_role(
 );
 
 INSERT INTO app_role(name) VALUES
-            ('ROLE_CLIENT'),
-            ('ROLE_ADMIN');
+            ('ROLE_ADMIN'),
+            ('ROLE_CLIENT');
 
 /*Роли пользователей, таблица соответствия*/
 CREATE TABLE app_user_role(
@@ -37,9 +33,7 @@ CREATE TABLE app_user_role(
                               app_role_id bigint references app_role(id)
 );
 
-INSERT INTO app_user_role(app_user_id, app_role_id) VALUES
-            (1, 1),
-            (2, 2);
+
 
 /*Комментарии пользователей к видео
   Ссылка на пользователя и видео - обязательные атрибуты
@@ -48,13 +42,13 @@ INSERT INTO app_user_role(app_user_id, app_role_id) VALUES
   Признак удаления нужен для сохранения иерархической структуры комментов, при удалении коммента из середины ветки
  */
 CREATE TABLE video_comment(
-                              id bigserial primary key,
-                              app_user_id bigint not null references app_user(id),
-                              video_metadata_id bigint not null references video_metadata(id),
-                              user_comment_id bigint null references video_comment(id),
-                              comment varchar(10240) not null,
-                              dt timestamp with time zone not null default current_timestamp,
-    deleted smallint default 0 not null
+                        id bigserial primary key,
+                        app_user_id bigint not null references app_user(id),
+                        video_metadata_id bigint not null references video_metadata(id),
+                        user_comment_id bigint null references video_comment(id),
+                        comment varchar(10240) not null,
+                        dt timestamp with time zone not null default current_timestamp,
+                        deleted smallint default 0 null
 );
 
 /*Оценки пользователей к видео

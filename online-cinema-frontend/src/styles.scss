@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+
+  background: #222333;
+  background: -webkit-linear-gradient(to right, #222333, #907578);
+  background: linear-gradient(to right, #222333, #907578);
+  color: #aaa;
+
+}
+
+.jumbotron {
+  color: #000000;
+  background: #567599;
+  background: -webkit-linear-gradient(to right, #567599, #1f2e4b);
+  background: linear-gradient(to right, #567599, #1f2e4b);
+}

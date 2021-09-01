@@ -10,7 +10,7 @@ import {VideoMetadata} from "../video-metadata";
 })
 export class VideoPlayerComponent implements OnInit {
 
-  public videoMetadata: VideoMetadata  = new VideoMetadata(0, '', '', '', '', '',0);
+  public videoMetadata: VideoMetadata  = new VideoMetadata(0, '', '', '', '', '',0, [], []);
 
   @ViewChild("videoPlayer") videoPlayerRef!: ElementRef;
 
@@ -33,6 +33,8 @@ export class VideoPlayerComponent implements OnInit {
               videoPlayer.currentTime = currentTime;
             }
           }
+
+          videoPlayer.height = screen.height * 0.6;
 
           videoPlayer.ontimeupdate = () => {
             sessionStorage.setItem("currentTime", videoPlayer.currentTime);

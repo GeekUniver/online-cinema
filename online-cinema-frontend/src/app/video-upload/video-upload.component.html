@@ -1,18 +1,50 @@
-<form id="uploadForm" name="uploadForm">
+<form id="uploadForm" name="uploadForm" style="color: #eeeeee">
 
   <div class="alert alert-danger" [style.display]="isError ? 'block' : 'none'">
     Error uploading file to server
   </div>
 
   <div class="mb-3">
-    <label for="description">Video description</label>
+    <label for="name">Наименование видео</label>
+    <input type="text" class="form-control" name="name" id="name" aria-describedby="Video name"
+           placeholder="Enter name for video">
+  </div>
+
+  <div class="mb-3">
+    <label for="description">Описание видео</label>
     <input type="text" class="form-control" name="description" id="description" aria-describedby="Video description"
            placeholder="Enter description for video">
   </div>
 
   <div class="mb-3">
-    <label for="videoFile">Example file input</label>
+    <label for="year_filmed">Год</label>
+    <input type="text" class="form-control" name="year_filmed" id="year_filmed" aria-describedby="Video year_filmed"
+           placeholder="Enter the year of the film's release">
+  </div>
+
+  <div>
+    <label>Жанры</label>
+    <div *ngFor="let genre of genres; let i=index">
+        <input type="checkbox" [value]="genre.id" (change)="onCheckboxChange($event)"/>
+        {{genre.name}}
+    </div>
+  </div>
+
+  <div>
+    <label>Страны</label>
+    <div *ngFor="let country of countries; let i=index">
+      <label>
+        <input type="checkbox" [value]="country.id + genres.length" (change)="onCheckboxChange($event)"/>
+        {{country.name}}
+      </label>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="videoFile">Файл для загрузки</label>
     <input type="file" class="form-control" name="file" id="videoFile">
   </div>
-  <button class="btn btn-dark" (click)="submit()" type="button" >Submit</button>
+  <button class="btn btn-dark" (click)="submit()" type="button">Загрузить</button>
 </form>
+
+

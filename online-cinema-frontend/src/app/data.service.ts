@@ -1,7 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {VideoMetadata} from "./video-metadata";
+import {CommentRepr} from "./commentrepr";
+import {Genre} from "./Genre";
+import {AuthInterceptor} from "./ _helpers/auth.interceptor";
+import {TokenStorageService} from "./_services/token-storage.service";
 import {Subject} from "rxjs";
+import {Country} from "../../Country";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +14,8 @@ import {Subject} from "rxjs";
 export class DataService {
   public condition$ = new Subject<string>();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,  private authInterceptor: AuthInterceptor, private tokenStorageService: TokenStorageService) {
+
   }
 
   public changeCount(condition: string) {
@@ -22,11 +28,14 @@ export class DataService {
   }
 
   public findAllPreviews() {
+    //let header =  new HttpHeaders({ 'Authorization': 'Bearer ' + this.tokenStorageService.getToken()});
+
+   // return this.http.get<VideoMetadata[]>('/api/v1/video/all', {headers: header}).toPromise();
     return this.http.get<VideoMetadata[]>('/api/v1/video/all').toPromise()
   }
 
   public uploadNewVideo(formData: FormData) {
-    return this.http.post('/api/v1/video/upload', formData).toPromise()
+    return this.http.post('/api/v1/admin/upload', formData).toPromise()
   }
 
   findAllPreviewsWithCondition(condition: string) {
@@ -37,4 +46,37 @@ export class DataService {
 
     return this.http.get<VideoMetadata[]>('/api/v1/video/search/' + condition).toPromise();
   }
+
+  findAllGenres() {
+    return this.http.get<Genre[]>('/api/v1/admin/genres').toPromise();
+  }
+
+  public addNewComment(formData: FormData) {
+    return this.http.post('/api/v1/video/addNewComment', formData).toPromise();
+  }
+
+  public findAllComments() {
+     return this.http.get<CommentRepr[]>('/api/v1/video/comments').toPromise()
+  }
+
+  public findCommentsByVideoId(id : number) {
+     return this.http.get<CommentRepr[]>('/api/v1/video/comments/' + id).toPromise()
+  }
+
+  findAllCountries() {
+    return this.http.get<Country[]>('/api/v1/admin/countries').toPromise();
+  }
+
+  addNewGenre(genre: Genre) {
+    return this.http.post('/api/v1/admin/genres', genre).toPromise();
+  }
+
+  addNewCountry(country: Country) {
+    return this.http.post('/api/v1/admin/countries', country).toPromise();
+  }
+
+  public findByRandomId () {
+    return this.http.get<VideoMetadata>('/api/v1/video/random' ).toPromise()
+  }
+
 }
