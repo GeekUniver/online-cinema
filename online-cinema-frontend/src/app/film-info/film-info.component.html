@@ -107,5 +107,29 @@
       </div>
       <button class="btn btn-dark" (click)="submit()" type="button" type="reset">Отправить</button>
     </form>
-  </div>
+    <!-- рейтинг-->
+    <h5 class="title-comments">Оцените видео</h5>
+    <!--c покрытием, но без текущего введеного значения
+    <div class="rating-area" (click)="setRate(rating)" id="ratingForm">
+      <input type="radio" id="star-5" name="rating" value="5" [(ngModel)] = "rating">
+      <label for="star-5" title="Оценка «5»"></label>
+      <input type="radio" id="star-4" name="rating" value="4" [(ngModel)] = "rating">
+      <label for="star-4" title="Оценка «4»"></label>
+      <input type="radio" id="star-3" name="rating" value="3" [(ngModel)] = "rating">
+      <label for="star-3" title="Оценка «3»"></label>
+      <input type="radio" id="star-2" name="rating" value="2" [(ngModel)] = "rating">
+      <label for="star-2" title="Оценка «2»"></label>
+      <input type="radio" id="star-1" name="rating" value="1" [(ngModel)] = "rating">
+      <label for="star-1" title="Оценка «1»"></label>
+    </div>-->
+
+    <!--без покрытие, текущий ввод-->
+    <span class="rating-area"
+          *ngFor="let value of values"
+          (click)="setRate(value)">
+      <input type="radio" id="{{value}}" name="rating" value="{{value}}" >
+      <label for="{{value}}"></label>
+    </span>
+
+</div>
 </div>

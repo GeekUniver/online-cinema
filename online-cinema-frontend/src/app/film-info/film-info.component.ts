@@ -14,16 +14,14 @@ export class FilmInfoComponent implements OnInit {
   isError: boolean = false;
   currentUser: any;
   videoId: number = 0;
+  rating: number = 0;
   comments: CommentRepr[] = [];
+  values: number [] = [1,2,3,4,5];
   public videoMetadata: VideoMetadata  = new VideoMetadata(0, '', '', '', '', '',0, [], []);
   constructor(private route: ActivatedRoute, public dataService: DataService, private tokenStorageService: TokenStorageService) { }
-//private tokenStorageService: TokenStorageService в конструкторе на 20.08 не было
+
 
   ngOnInit(): void {
-
-    //console.log(this.tokenStorageService)
-    //console.log(this.currentUser)
-    //console.log(this.currentUser.username)
     this.route.params.subscribe(param => {
       this.videoId = param.id;
       this.dataService.findById(param.id)
@@ -36,7 +34,7 @@ export class FilmInfoComponent implements OnInit {
         });
     });
     this.getCommentsByVideoId(this.videoId)
-    this.currentUser = this.tokenStorageService.getUser()
+    this.currentUser = this.tokenStorageService.getUser();
   }
 
   submit() {
@@ -65,6 +63,24 @@ export class FilmInfoComponent implements OnInit {
             this.isError = true;
           });
   }
+
+  makeRating() {
+   // console.info(this.rating);
+    //console.info('video_rating: ' + video_rating);
+    //console.info('video id: ' + this.videoMetadata.id);
+   // console.info('user id: ' + currentUser.)
+
+  }
+
+  onChange = (value: any) => {};
+
+
+setRate(rate: number) {
+    this.rating = rate;
+    console.info(this.rating);
+    this.onChange(rate);
+}
+
 
 }
 
